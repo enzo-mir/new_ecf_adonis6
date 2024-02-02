@@ -1,5 +1,10 @@
 import { create } from 'zustand'
-import type { CardType, HourType, ImageType } from '../../types/dataApiTypes.js'
+import type {
+  CardType,
+  CurrentReservationTypeStore,
+  HourType,
+  ImageType,
+} from '../../types/dataApiTypes.js'
 
 export const hourStore = create<HourType>((set) => ({
   hours: [],
@@ -18,4 +23,9 @@ export const cardStore = create<CardType>((set) => ({
     desserts: [{ id: 0, description: '', name: '', price: 0 }],
   },
   setCardStore: (val) => set(() => ({ cardStore: val })),
+}))
+
+export const currentReservations = create<CurrentReservationTypeStore>((set) => ({
+  currentReservation: [],
+  setCurrentReservation: (val) => set(() => ({ currentReservation: val })),
 }))

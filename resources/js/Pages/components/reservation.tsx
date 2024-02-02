@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import { useForm } from '@inertiajs/react'
 import { reservationScheama } from '../../types/reservationData.scheama.js'
-import type { User, currentReservationType } from '../../types/userType.store.js'
+import type { User, CurrentReservationType } from '../../types/user_type.store.js'
 import { TbUsersPlus } from 'react-icons/tb'
 import { MdOutlineDateRange } from 'react-icons/md'
 import { MdAlternateEmail } from 'react-icons/md'
@@ -175,7 +175,7 @@ export default function Reserv({ res: displayReservation }: { res(val: boolean):
             setUserData({
               user: {
                 ...userData.user,
-                currentReservation: success.props.valid as currentReservationType[],
+                currentReservation: success.props.valid as CurrentReservationType[],
               },
             })
           }

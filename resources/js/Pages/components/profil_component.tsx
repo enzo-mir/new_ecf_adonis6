@@ -6,17 +6,17 @@ import { updateZodType } from '../../types/userManagmentType.js'
 import { z } from 'zod'
 import React from 'react'
 import { useForm } from '@inertiajs/react'
-import type { User } from '../../types/userType.store.js'
+import type { User } from '../../types/user_type.store.js'
 import styles from '../../../css/profil.module.css'
 import overlayStyles from '../../../css/overlay.module.css'
 const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean): void }) => {
   const [userData, setuserData] = userDataStore((state) => [state.userData, state.setUserData])
   const { post, data, setData, reset, processing } = useForm({
-    name: userData.user.name,
-    email: userData.user.email,
-    guests: userData.user.guests,
+    name: userData.name,
+    email: userData.email,
+    guests: userData.guests,
     password: null,
-    alergy: userData.user.alergy,
+    alergy: userData.alergy,
   })
   const setConnectedUser = connectStore((state) => state.setConnectedUser)
 
@@ -37,14 +37,10 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
 
     var objectComparaison: boolean = true
     const objectToCompare = { ...data }
-    Object.assign(objectToCompare, {
-      currentReservation: userData.user.currentReservation,
-    })
     function areObjectsEqual() {
       for (const key in objectToCompare) {
         if (Object.prototype.hasOwnProperty.call(objectToCompare, key)) {
-          if (objectToCompare[key] !== { ...userData.user, password: data.password }[key])
-            return false
+          if (objectToCompare[key] !== { ...userData, password: data.password }[key]) return false
         }
       }
       return true
@@ -68,7 +64,8 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
           },
           onSuccess: (success) => {
             setuserData({
-              user: { ...userData.user, ...(success.props.valid as User) },
+              ...userData,
+              ...(success.props.valid as User),
             })
             setEditable(false)
           },
@@ -92,14 +89,11 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
             setDisplayProfil(false)
             setConnectedUser(false)
             setuserData({
-              user: {
-                name: '',
-                email: '',
-                password: '',
-                guests: 0,
-                alergy: '',
-                currentReservation: [],
-              },
+              name: '',
+              email: '',
+              password: '',
+              guests: 0,
+              alergy: '',
             })
             setDisplayProfil(false)
             reset()
@@ -117,14 +111,11 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
             setConnectedUser(false)
             reset()
             setuserData({
-              user: {
-                name: '',
-                email: '',
-                password: '',
-                guests: 0,
-                alergy: '',
-                currentReservation: [],
-              },
+              name: '',
+              email: '',
+              password: '',
+              guests: 0,
+              alergy: '',
             })
             setDisplayProfil(false)
           }, 1500)
@@ -221,6 +212,7 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
                 Mot de passe :
                 <input
                   type="text"
+                  autoComplete="new-password"
                   name="name"
                   value={data.password || ''}
                   onChange={(e) => setData({ ...data, password: e.target.value })}

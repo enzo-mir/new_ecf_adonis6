@@ -11,7 +11,7 @@ import type {
   platType,
 } from '../types/dataApiTypes.js'
 const Layout = React.lazy(() => import('./components/layout.js'))
-import type { User } from '../types/userType.store.js'
+import type { User } from '../types/user_type.store.js'
 import { Head } from '@inertiajs/react'
 
 const Card = ({

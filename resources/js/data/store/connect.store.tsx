@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { userDataType } from '../../types/userType.store'
+import type { UserDataType } from '../../types/user_type.store'
 import type { connectionType } from '../../types/connectionType.store'
 
 export const connectStore = create<connectionType>((set) => ({
@@ -9,17 +9,14 @@ export const connectStore = create<connectionType>((set) => ({
   setConnectedAdmin: (val) => set(() => ({ connectedAdmin: val })),
 }))
 
-export const userDataStore = create<userDataType>((set) => ({
+export const userDataStore = create<UserDataType>((set) => ({
   userData: {
-    user: {
-      id: 0,
-      name: '',
-      email: '',
-      password: '',
-      guests: 0,
-      alergy: '',
-      currentReservation: [],
-    },
+    id: 0,
+    name: '',
+    email: '',
+    password: '',
+    guests: 0,
+    alergy: '',
   },
   setUserData: (val) => set(() => ({ userData: val })),
 }))

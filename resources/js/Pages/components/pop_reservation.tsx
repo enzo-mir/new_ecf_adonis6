@@ -5,7 +5,7 @@ import { userDataStore } from '../../data/store/connect.store.js'
 import { motion } from 'framer-motion'
 import React from 'react'
 import { useForm } from '@inertiajs/react'
-import type { User } from '../../types/userType.store.js'
+import type { User } from '../../types/user_type.store.js'
 import overlaystyles from '../../../css/overlay.module.css'
 
 const PopReservation = ({ setDisplay }: { setDisplay(val: boolean): void }) => {
