@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon'
 import { withAuthFinder } from '@adonisjs/auth'
 import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
@@ -14,7 +13,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare id: number
 
   @column()
-  declare fullName: string | null
+  declare name: string
 
   @column()
   declare email: string
@@ -22,9 +21,12 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare password: string
 
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
+  @column()
+  declare guests: number
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
+  @column()
+  declare alergy: string
+
+  @column()
+  declare role: 0 | 1
 }

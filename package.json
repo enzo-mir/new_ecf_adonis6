@@ -29,7 +29,9 @@
     "#database/*": "./database/*.js",
     "#tests/*": "./tests/*.js",
     "#start/*": "./start/*.js",
-    "#config/*": "./config/*.js"
+    "#config/*": "./config/*.js",
+    "#types/*": "./types/*.ts",
+    "#functions/*": "./app/functions/*.ts"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^7.1.1",
@@ -54,6 +56,7 @@
   },
   "dependencies": {
     "@adonisjs/auth": "^9.1.1",
+    "@adonisjs/bouncer": "^3.1.1",
     "@adonisjs/core": "^6.2.2",
     "@adonisjs/inertia": "1.0.0-7",
     "@adonisjs/lucid": "^20.1.0",
@@ -65,10 +68,16 @@
     "@vinejs/vine": "^1.7.1",
     "better-sqlite3": "^9.3.0",
     "edge.js": "^6.0.1",
+    "framer-motion": "^11.0.3",
     "luxon": "^3.4.4",
+    "mysql2": "^3.9.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "reflect-metadata": "^0.2.1"
+    "react-icons": "^5.0.1",
+    "reflect-metadata": "^0.2.1",
+    "styled-components": "^6.1.8",
+    "zod": "^3.22.4",
+    "zustand": "^4.5.0"
   },
   "eslintConfig": {
     "extends": "@adonisjs/eslint-config/app"
