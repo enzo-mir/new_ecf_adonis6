@@ -66,11 +66,6 @@ export type CardDataType = {
   menus: MenuType
 }
 
-export type CurrentReservationTypeStore = {
-  currentReservation: CurrentReservationType
-  setCurrentReservation(val: CurrentReservationType): void
-}
-
 export type CardType = {
   cardStore: CardDataType
   setCardStore(val: CardDataType): void

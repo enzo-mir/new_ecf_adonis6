@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Database from '@adonisjs/lucid/services/db'
 import { UpdatedFormDataType } from '#types/user_type'
+import { getCurrentReservation } from './get_reservations.js'
 async function getUserData(ctx: HttpContext) {
   const userDatabase = await Database.rawQuery(
     'SELECT name, email, guests, alergy from users WHERE id = ? AND email = ?',
@@ -23,4 +24,20 @@ async function getReservation(ctx: HttpContext) {
   }
 }
 
-export { getUserData, getReservation }
+async function sendUserData(ctx: HttpContext) {
+  if ((await ctx.auth.check()) && (await getCurrentReservation(ctx))) {
+    const currentReservation = await getCurrentReservation(ctx)
+    const userObject = ctx.auth.authenticate()
+    const response = {
+      id: (await userObject)!.id,
+      email: (await userObject)!.email,
+      guests: (await userObject)!.guests,
+      alergy: (await userObject)!.alergy,
+      name: (await userObject)!.name,
+      currentReservation,
+    }
+    return response
+  }
+}
+
+export { getUserData, getReservation, sendUserData }

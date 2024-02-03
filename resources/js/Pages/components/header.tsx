@@ -8,7 +8,6 @@ const Reserv = React.lazy(() => import('./reservation.tsx'))
 const PopReservation = React.lazy(() => import('./pop_reservation.js'))
 const ProfilComponent = React.lazy(() => import('./profil_component.js'))
 import styles from '../../../css/header.module.css'
-import { currentReservations } from '../../data/store/api_data.store.tsx'
 const Log = React.lazy(() => import('./log.js'))
 
 const Header = () => {
@@ -25,7 +24,6 @@ const Header = () => {
   ])
   const { post } = useForm()
   const [userData, setuserData] = userDataStore((state) => [state.userData, state.setUserData])
-  const currentReservation = currentReservations((state) => state.currentReservation)
   useEffect(() => {
     window.scrollTo(0, 0)
     setDisplayHeader(false)
@@ -103,7 +101,7 @@ const Header = () => {
           ) : (
             <>
               <button className="reservations" onClick={() => setDisplayModalReservation(true)}>
-                {currentReservation?.length}
+                {userData.currentReservation?.length}
               </button>
               <button className={styles.profil_btn} onClick={() => setProfilPage(true)}>
                 {userData ? userData.name.charAt(0) : null}

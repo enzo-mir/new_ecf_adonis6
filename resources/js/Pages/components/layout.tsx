@@ -3,12 +3,7 @@ import Header from './header.tsx'
 import Footer from './footer.js'
 import { usePage } from '@inertiajs/react'
 import { connectStore, userDataStore } from '../../data/store/connect.store.js'
-import {
-  cardStore,
-  currentReservations,
-  hourStore,
-  imageStore,
-} from '../../data/store/api_data.store.js'
+import { cardStore, hourStore, imageStore } from '../../data/store/api_data.store.js'
 import type {
   CardDataType,
   CurrentReservationType,
@@ -25,7 +20,6 @@ const Layout = ({ children }) => {
       user?: User
       cardData?: CardDataType
       imagesData?: Image[]
-      currentReservation?: CurrentReservationType
     }
   }
 
@@ -37,7 +31,6 @@ const Layout = ({ children }) => {
     state.setConnectedUser,
     state.setConnectedAdmin,
   ])
-  const setCurrentReservation = currentReservations((state) => state.setCurrentReservation)
   const setImages = imageStore((state) => state.setImages)
 
   useEffect(() => {
@@ -48,7 +41,6 @@ const Layout = ({ children }) => {
       setUserData({ ...props.user, alergy: props.user.alergy === 'null' ? '' : props.user.alergy })
       setConnectedUser(true)
     }
-    if (props.currentReservation) setCurrentReservation(props.currentReservation)
     /*  if (props.user) {
       setConnectedAdmin(true)
     } */

@@ -34,48 +34,23 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
   async function validationForm(e: FormEvent) {
     e.preventDefault()
     setValidationMessage('')
-
-    var objectComparaison: boolean = true
-    const objectToCompare = { ...data }
-    function areObjectsEqual() {
-      for (const key in objectToCompare) {
-        if (Object.prototype.hasOwnProperty.call(objectToCompare, key)) {
-          if (objectToCompare[key] !== { ...userData, password: data.password }[key]) return false
-        }
-      }
-      return true
-    }
-    if (areObjectsEqual()) {
-      objectComparaison = false
-    } else {
-      objectComparaison = true
-    }
-
-    if (!objectComparaison) {
-      setEditable(false)
-      reset()
-    } else {
-      try {
-        await updateZodType.parseAsync(data)
-        post('/profile/update', {
-          data,
-          onError: (err) => {
-            setValidationMessage(err as unknown as string)
-          },
-          onSuccess: (success) => {
-            setuserData({
-              ...userData,
-              ...(success.props.valid as User),
-            })
-            setEditable(false)
-          },
-        })
-      } catch (error) {
-        if (error instanceof z.ZodError) {
-          setValidationMessage(error.errors[0].message)
-        } else {
-          setValidationMessage(error.message)
-        }
+    try {
+      await updateZodType.parseAsync(data)
+      post('/profile/update', {
+        data,
+        onError: (err) => {
+          setValidationMessage(err as unknown as string)
+        },
+        onSuccess: () => {
+          setValidationMessage('Mise à jour du compte effectuée')
+          setEditable(false)
+        },
+      })
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        setValidationMessage(error.errors[0].message)
+      } else {
+        setValidationMessage(error.message)
       }
     }
   }
@@ -135,6 +110,7 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
           <button
             onMouseDown={() => {
               setEditable(true)
+              setValidationMessage('')
             }}
           >
             Éditer les infos

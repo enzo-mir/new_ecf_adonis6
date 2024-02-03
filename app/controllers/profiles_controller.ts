@@ -21,7 +21,7 @@ export default class ProfilesController {
         let hashedPassword = await Hash.make(userUpdateData.password!)
 
         const updateQuery = await Database.rawQuery(
-          `UPDATE users SET name = "${userUpdateData.name}",email = "${userUpdateData.email}",guests = ${userUpdateData.guests},alergy = "${userUpdateData.alergy}",password="${hashedPassword}" WHERE email = "${ctx.auth.user?.email}"`
+          `UPDATE users SET name = "${userUpdateData.name}",email = "${userUpdateData.email}",guests = ${userUpdateData.guests},alergy = "${userUpdateData.alergy}",password="${hashedPassword}" WHERE id = "${(await ctx.auth.use('web').authenticate())!.id}"`
         )
 
         if (updateQuery[0].changedRows > 0) {
