@@ -1,6 +1,6 @@
 import React from 'react'
 import { imageStore } from '../../../data/store/api_data.store.js'
-import type { Image } from '../../../types/dataApiTypes.js'
+import type { Image } from '../../../types/data_api_types.js'
 import styles from '../../../../css/admin.module.css'
 const AdminImages = ({
   setDisplayModal,

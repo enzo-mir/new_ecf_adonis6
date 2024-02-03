@@ -1,6 +1,6 @@
 import { type FormEvent, useState } from 'react'
 import { Cross } from '../../assets/style/cross.js'
-import { LoginDataType, signinType } from '../../types/userManagmentType.js'
+import { LoginDataType, signinType } from '../../types/user_managment_type.js'
 import { motion } from 'framer-motion'
 import { useForm } from '@inertiajs/react'
 import React from 'react'

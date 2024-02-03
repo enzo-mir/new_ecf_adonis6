@@ -1,7 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { CreateUserScheama, LoginUserScheama } from '#types/user_type'
 import { z } from 'zod'
-import { getReservation, getUserData } from '#functions/get_user_data'
 import Database from '@adonisjs/lucid/services/db'
 import Hash from '@adonisjs/core/services/hash'
 import User from '#models/user'
@@ -16,8 +15,7 @@ export default class AuthentificationsController {
       )
       await Hash.verify(getDatabsePwd[0][0].password, userinfo.password)
       const user = await User.verifyCredentials(userinfo.email, userinfo.password)
-      console.log(user)
-
+      ctx.auth.use('web').login(user)
       return ctx.response.redirect().back()
     } catch (error) {
       ctx.session.flash({
@@ -43,15 +41,8 @@ export default class AuthentificationsController {
         `INSERT INTO users(name, email, password, guests, alergy) VALUES ("${registerData.name}","${registerData.email}","${hashedPassword}",${registerData.guests},"${registerData.alergy}")`
       )
       if (insertionQuery[0].affectedRows > 0) {
-        // await ctx.auth.attempt(registerData)
-        ctx.session.flash({
-          valid: {
-            user: {
-              ...(await getUserData(ctx)),
-              currentReservation: await getReservation(ctx),
-            },
-          },
-        })
+        const user = await User.verifyCredentials(registerData.email, registerData.password)
+        ctx.auth.use('web').login(user)
         return ctx.response.redirect().back()
       } else {
         throw new Error('Problème lors de la création du compte')

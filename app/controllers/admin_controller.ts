@@ -8,13 +8,13 @@ import Database from '@adonisjs/lucid/services/db'
 export default class AdminController {
   async index(ctx: HttpContext) {
     if (ctx.auth.user?.role === 1) {
-      return ctx.inertia.render('Admin', {
+      return ctx.inertia.render('admin', {
         hoursData: allHours[0],
         cardData: getCardData(),
         imagesData: allImages[0],
       })
     } else {
-      return ctx.inertia.render('UndefinedPage')
+      return ctx.inertia.render('undefined_page')
     }
   }
 
@@ -23,7 +23,7 @@ export default class AdminController {
       const hoursData = HourType.parse(ctx.request.all())
       for (let i = 0; i < hoursData.data.length; i++) {
         const element = hoursData.data[i]
-        if (element.time == 'lunch') {
+        if (element.time === 'lunch') {
           const rowUpdated = await Database.rawQuery(
             `UPDATE hours SET lunch = "${element.target}" WHERE day = "${element.day}"`
           )
@@ -35,7 +35,7 @@ export default class AdminController {
               error: 'Une erreur est survenus lor de la mise à jour des données',
             })
           }
-        } else if (element.time == 'dinner') {
+        } else if (element.time === 'dinner') {
           const rowUpdated = await Database.rawQuery(
             `UPDATE hours SET dinner = "${element.target}" WHERE day = "${element.day}"`
           )

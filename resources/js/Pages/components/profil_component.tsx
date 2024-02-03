@@ -2,7 +2,7 @@ import { type FormEvent, useEffect, useState } from 'react'
 import { connectStore, userDataStore } from '../../data/store/connect.store.js'
 import { Cross } from '../../assets/style/cross.js'
 import { motion } from 'framer-motion'
-import { updateZodType } from '../../types/userManagmentType.js'
+import { updateZodType } from '../../types/user_managment_type.js'
 import { z } from 'zod'
 import React from 'react'
 import { useForm } from '@inertiajs/react'
@@ -15,7 +15,7 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
     name: userData.name,
     email: userData.email,
     guests: userData.guests,
-    password: null,
+    password: '',
     alergy: userData.alergy,
   })
   const setConnectedUser = connectStore((state) => state.setConnectedUser)

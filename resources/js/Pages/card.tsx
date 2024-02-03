@@ -5,11 +5,11 @@ import styles from '../../css/card.module.css'
 import type {
   CardDataType,
   HourDataType,
-  dessertType,
-  entreeType,
-  menuType,
-  platType,
-} from '../types/dataApiTypes.js'
+  DessertType,
+  EntreeType,
+  MenuType,
+  PlatType,
+} from '../types/data_api_types.js'
 const Layout = React.lazy(() => import('./components/layout.js'))
 import type { User } from '../types/user_type.store.js'
 import { Head } from '@inertiajs/react'
@@ -27,7 +27,7 @@ const Card = ({
   const { starters, dishs, desserts, menus } = cardData
 
   function mapingSimilarityFood(
-    food: entreeType | platType | dessertType | menuType,
+    food: EntreeType | PlatType | DessertType | MenuType,
     title: string
   ) {
     return food === starters || food === dishs ? (
@@ -79,7 +79,7 @@ const Card = ({
     ) : (
       <>
         <h2>{title}</h2>
-        {(food as menuType).map((element) => {
+        {(food as MenuType).map((element) => {
           return (
             <div key={element.id}>
               <p>{element.name}</p>

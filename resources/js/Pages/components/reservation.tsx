@@ -6,8 +6,8 @@ import { hourStore } from '../../data/store/api_data.store.js'
 import { motion } from 'framer-motion'
 import React from 'react'
 import { useForm } from '@inertiajs/react'
-import { reservationScheama } from '../../types/reservationData.scheama.js'
-import type { User, CurrentReservationType } from '../../types/user_type.store.js'
+import { reservationScheama } from '../../types/reservation_data.scheama.js'
+import type { User } from '../../types/user_type.store.js'
 import { TbUsersPlus } from 'react-icons/tb'
 import { MdOutlineDateRange } from 'react-icons/md'
 import { MdAlternateEmail } from 'react-icons/md'
@@ -23,17 +23,17 @@ export default function Reserv({ res: displayReservation }: { res(val: boolean):
   const connected = connectStore((state) => state.connectedUser)
   const hours = hourStore((state) => state.hours)
   const { data, setData, processing, post } = useForm({
-    name: connected ? userData?.user.name : '',
-    email: connected ? userData?.user.email : '',
-    guests: connected ? userData?.user.guests : 1,
-    alergy: connected ? userData?.user.alergy : '',
+    name: connected ? userData?.name : '',
+    email: connected ? userData?.email : '',
+    guests: connected ? userData?.guests : 1,
+    alergy: connected ? userData?.alergy : '',
     date: new Date().toLocaleDateString('fr-CA'),
     hourTargeted: null,
     timeTargeted: null,
   })
 
   const [resError, setResError] = useState('')
-  const [showAllergy, setShowAllergy] = useState(userData?.user.alergy ? true : false)
+  const [showAllergy, setShowAllergy] = useState(userData?.alergy ? true : false)
   const [DTable, setDTable] = useState<Array<string> | string>([])
   const [LTable, setLTable] = useState<Array<string> | string>([])
   const reservContainerRef = useRef<HTMLElement | null>(null)
@@ -170,15 +170,7 @@ export default function Reserv({ res: displayReservation }: { res(val: boolean):
         onError: (err) => {
           setResError(err as unknown as string)
         },
-        onSuccess: (success) => {
-          if (success.props.valid) {
-            setUserData({
-              user: {
-                ...userData.user,
-                currentReservation: success.props.valid as CurrentReservationType[],
-              },
-            })
-          }
+        onSuccess: () => {
           setResError('Table réservée !')
           displayReservation(false)
         },
@@ -235,9 +227,9 @@ export default function Reserv({ res: displayReservation }: { res(val: boolean):
               id="email"
               required
               placeholder="Entrez votre e-mail"
-              value={userData.user?.email || data.email}
-              onChange={(e) => userData.user?.email || setData({ ...data, email: e.target.value })}
-              disabled={userData.user?.email ? true : false}
+              value={userData?.email || data.email}
+              onChange={(e) => userData?.email || setData({ ...data, email: e.target.value })}
+              disabled={userData?.email ? true : false}
             />
           </label>
           <label htmlFor="name">
@@ -247,9 +239,9 @@ export default function Reserv({ res: displayReservation }: { res(val: boolean):
               id="name"
               required
               placeholder="Entrez votre nom"
-              value={userData.user?.name || data.name}
-              onChange={(e) => userData.user?.name || setData({ ...data, name: e.target.value })}
-              disabled={userData.user?.name ? true : false}
+              value={userData?.name || data.name}
+              onChange={(e) => userData?.name || setData({ ...data, name: e.target.value })}
+              disabled={userData?.name ? true : false}
             />
           </label>
         </div>

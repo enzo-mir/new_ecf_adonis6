@@ -15,10 +15,8 @@ import ReservationsController from '#controllers/reservations_controller'
 import { HttpContext } from '@adonisjs/core/http'
 import Router from '@adonisjs/core/services/Router'
 import { middleware } from './kernel.js'
-
-Router.get('/', [PropsPagesController, 'home']).use(middleware.auth())
-
-Router.get('/carte', [PropsPagesController, 'card'])
+Router.get('/', [PropsPagesController, 'home'])
+Router.get('carte', [PropsPagesController, 'card'])
 
 Router.group(() => {
   Router.post('/add', [ReservationsController, 'add'])
@@ -34,12 +32,10 @@ Router.group(() => {
 Router.group(() => {
   Router.post('/login', [AuthentificationsController, 'login'])
   Router.post('/register', [AuthentificationsController, 'register'])
-})
-  .prefix('auth')
-  .use(middleware.auth())
+}).prefix('auth')
 
 Router.group(() => {
-  Router.get('', [AdminController, 'index'])
+  Router.get('', [AdminController, 'index']).use(middleware.auth())
   Router.post('/hoursEdition', [AdminController, 'hours'])
 }).prefix('/admin')
 
@@ -52,5 +48,5 @@ Router.group(() => {
 }).prefix('/image')
 
 Router.any('/*', async (ctx: HttpContext) => {
-  return ctx.inertia.render('UndefinedPage')
+  return ctx.inertia.render('undefined_page')
 })

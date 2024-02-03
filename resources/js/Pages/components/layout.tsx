@@ -14,7 +14,7 @@ import type {
   CurrentReservationType,
   HourDataType,
   Image,
-} from '../../types/dataApiTypes.js'
+} from '../../types/data_api_types.js'
 import type { User } from '../../types/user_type.store.js'
 import React from 'react'
 
@@ -45,7 +45,7 @@ const Layout = ({ children }) => {
     props.cardData && setCardData(props.cardData)
     props.imagesData && setImages(props.imagesData)
     if (props.user) {
-      setUserData(props.user)
+      setUserData({ ...props.user, alergy: props.user.alergy === 'null' ? '' : props.user.alergy })
       setConnectedUser(true)
     }
     if (props.currentReservation) setCurrentReservation(props.currentReservation)

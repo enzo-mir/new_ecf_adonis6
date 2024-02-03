@@ -1,8 +1,8 @@
 import { create } from 'zustand'
 import type { UserDataType } from '../../types/user_type.store'
-import type { connectionType } from '../../types/connectionType.store'
+import type { ConnectionType } from '../../types/connection_type.store'
 
-export const connectStore = create<connectionType>((set) => ({
+export const connectStore = create<ConnectionType>((set) => ({
   connectedUser: false,
   setConnectedUser: (val) => set(() => ({ connectedUser: val })),
   connectedAdmin: null,

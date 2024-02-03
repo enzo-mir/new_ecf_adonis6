@@ -4,7 +4,7 @@ import type {
   CurrentReservationTypeStore,
   HourType,
   ImageType,
-} from '../../types/dataApiTypes.js'
+} from '../../types/data_api_types.js'
 
 export const hourStore = create<HourType>((set) => ({
   hours: [],

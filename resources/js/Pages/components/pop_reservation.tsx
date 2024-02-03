@@ -7,10 +7,14 @@ import React from 'react'
 import { useForm } from '@inertiajs/react'
 import type { User } from '../../types/user_type.store.js'
 import overlaystyles from '../../../css/overlay.module.css'
+import { currentReservations } from '../../data/store/api_data.store.tsx'
 
 const PopReservation = ({ setDisplay }: { setDisplay(val: boolean): void }) => {
   const [errorMessage, setErrorMessage] = useState('')
-  const [userData, setUserData] = userDataStore((state) => [state.userData, state.setUserData])
+  const [currentReservation, setCurrentReservation] = currentReservations((state) => [
+    state.currentReservation,
+    state.setCurrentReservation,
+  ])
   const { post, processing, data, setData, reset } = useForm({
     guests: 0,
     date: '',
@@ -39,7 +43,7 @@ const PopReservation = ({ setDisplay }: { setDisplay(val: boolean): void }) => {
           </tr>
         </thead>
         <tbody>
-          {userData.user.currentReservation.map((reservation, id) => {
+          {currentReservation.map((reservation, id) => {
             return (
               <tr key={id} className="reservationSettings">
                 <td>{reservation.guests}</td>
@@ -64,15 +68,8 @@ const PopReservation = ({ setDisplay }: { setDisplay(val: boolean): void }) => {
                             onError: (err) => {
                               setErrorMessage(err as unknown as string)
                             },
-                            onSuccess: (success) => {
+                            onSuccess: () => {
                               setErrorMessage('')
-                              setUserData({
-                                user: {
-                                  ...userData.user,
-                                  currentReservation: (success.props.userData as User).user
-                                    .currentReservation,
-                                },
-                              })
                             },
                           })
                         }}

@@ -4,7 +4,7 @@ const Reserv = React.lazy(() => import('./components/reservation.js'))
 const Layout = React.lazy(() => import('./components/layout.js'))
 import { AnimatePresence, motion } from 'framer-motion'
 import { Head } from '@inertiajs/react'
-import type { Image } from '../types/dataApiTypes.js'
+import type { Image } from '../types/data_api_types.js'
 import styles from '../../css/home.module.css'
 import overlayStyles from '../../css/overlay.module.css'
 

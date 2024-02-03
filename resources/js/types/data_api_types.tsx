@@ -15,7 +15,7 @@ export type Image = {
   url: string
   title: string
 }
-export type dessertType = [
+export type DessertType = [
   {
     id: number
     name: string
@@ -24,7 +24,7 @@ export type dessertType = [
     sharing?: 0 | 1
   },
 ]
-export type entreeType = [
+export type EntreeType = [
   {
     description: string
     id: number
@@ -33,7 +33,7 @@ export type entreeType = [
     sharing: 0 | 1
   },
 ]
-export type platType = [
+export type PlatType = [
   {
     description: string
     id: number
@@ -42,7 +42,7 @@ export type platType = [
     sharing: 0 | 1
   },
 ]
-export type menuType = [
+export type MenuType = [
   {
     id: number
     name: string
@@ -60,10 +60,10 @@ export type CurrentReservationType = Array<{
 }>
 
 export type CardDataType = {
-  starters: entreeType
-  dishs: platType
-  desserts: dessertType
-  menus: menuType
+  starters: EntreeType
+  dishs: PlatType
+  desserts: DessertType
+  menus: MenuType
 }
 
 export type CurrentReservationTypeStore = {

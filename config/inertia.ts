@@ -3,10 +3,13 @@ import { defineConfig } from '@adonisjs/inertia'
 
 export default defineConfig({
   rootView: 'home',
-
   sharedData: {
     errors: (ctx) => ctx.session.flashMessages.get('errors'),
-    user: (ctx) => ctx.auth.user,
+    user: async (ctx) => {
+      if (await ctx.auth.check()) {
+        return ctx.auth.authenticate()
+      }
+    },
     currentReservation: (ctx) => currentReservation(ctx),
   },
 })
