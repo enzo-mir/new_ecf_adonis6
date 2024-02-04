@@ -9,9 +9,9 @@ export default class AdminController {
   async index(ctx: HttpContext) {
     if (ctx.auth.user?.role === 1) {
       return ctx.inertia.render('admin', {
-        hoursData: allHours[0],
-        cardData: getCardData(),
-        imagesData: allImages[0],
+        hours: allHours[0],
+        cardData: await getCardData(),
+        images: allImages[0],
       })
     } else {
       return ctx.inertia.render('undefined_page')

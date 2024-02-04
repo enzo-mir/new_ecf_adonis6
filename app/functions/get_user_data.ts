@@ -34,6 +34,7 @@ async function sendUserData(ctx: HttpContext) {
       guests: (await userObject)!.guests,
       alergy: (await userObject)!.alergy,
       name: (await userObject)!.name,
+      role: (await userObject)!.role,
       currentReservation,
     }
     return response

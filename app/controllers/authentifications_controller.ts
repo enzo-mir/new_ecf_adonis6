@@ -16,6 +16,10 @@ export default class AuthentificationsController {
       await Hash.verify(getDatabsePwd[0][0].password, userinfo.password)
       const user = await User.verifyCredentials(userinfo.email, userinfo.password)
       ctx.auth.use('web').login(user)
+      if (user.role === 1) {
+        return ctx.response.redirect().toPath('/admin')
+      }
+
       return ctx.response.redirect().back()
     } catch (error) {
       ctx.session.flash({

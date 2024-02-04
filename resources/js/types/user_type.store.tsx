@@ -6,6 +6,7 @@ export type User = {
   password: string
   guests: number | null
   alergy: string
+  role: 0 | 1
   currentReservation?: CurrentReservationType
 }
 

@@ -4,12 +4,7 @@ import Footer from './footer.js'
 import { usePage } from '@inertiajs/react'
 import { connectStore, userDataStore } from '../../data/store/connect.store.js'
 import { cardStore, hourStore, imageStore } from '../../data/store/api_data.store.js'
-import type {
-  CardDataType,
-  CurrentReservationType,
-  HourDataType,
-  Image,
-} from '../../types/data_api_types.js'
+import type { CardDataType, HourDataType, Image } from '../../types/data_api_types.js'
 import type { User } from '../../types/user_type.store.js'
 import React from 'react'
 
@@ -38,12 +33,16 @@ const Layout = ({ children }) => {
     props.cardData && setCardData(props.cardData)
     props.imagesData && setImages(props.imagesData)
     if (props.user) {
-      setUserData({ ...props.user, alergy: props.user.alergy === 'null' ? '' : props.user.alergy })
-      setConnectedUser(true)
+      if (props.user.role === 1) {
+        setConnectedAdmin(true)
+      } else {
+        setUserData({
+          ...props.user,
+          alergy: props.user.alergy === 'null' ? '' : props.user.alergy,
+        })
+        setConnectedUser(true)
+      }
     }
-    /*  if (props.user) {
-      setConnectedAdmin(true)
-    } */
   }, [props])
   return (
     <>

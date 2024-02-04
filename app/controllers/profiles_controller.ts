@@ -56,10 +56,9 @@ export default class ProfilesController {
 
   async delete(ctx: HttpContext) {
     try {
-      const lineDeleted = await Database.rawQuery(
-        'DELETE FROM `users` WHERE `id` = ? AND `email` = ? AND `name` = ? ',
-        [ctx.auth.user?.id, ctx.auth.user?.email, ctx.auth.user?.name]
-      )
+      const lineDeleted = await Database.rawQuery('DELETE FROM `users` WHERE `id` = ?', [
+        (await ctx.auth.authenticate())!.id,
+      ])
       if (lineDeleted[0].affectedRows) {
         await this.logout(ctx)
       } else {
