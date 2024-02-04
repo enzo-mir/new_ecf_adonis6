@@ -7,7 +7,7 @@ export type HourDataType = {
 export type HourToSend = {
   day: string
   time: string
-  target: string
+  value: string
 }
 export type Image = {
   description: string

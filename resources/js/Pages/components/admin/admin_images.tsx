@@ -10,6 +10,7 @@ const AdminImages = ({
   setImageData: (val: { title: string; description: string; url: string; adding: boolean }) => void
 }) => {
   const [setImages, image] = imageStore((state) => [state.setImages, state.images])
+
   function imageAdd() {
     setImageData({
       title: '',

@@ -1,33 +1,33 @@
-import { useState } from "react";
-import { hourStore } from "../../../data/store/api_data.store";
-import { MdEditSquare } from "react-icons/md";
-import styles from "../../../../css/admin.module.css";
+import { useState } from 'react'
+import { hourStore } from '../../../data/store/api_data.store'
+import { MdEditSquare } from 'react-icons/md'
+import styles from '../../../../css/admin.module.css'
+import React from 'react'
 
 export default function HourEditing() {
-  const [errorHour, setErrorHour] = useState(false);
-  const [hoursEdit, setHoursEdit] = useState(false);
+  const [errorHour, setErrorHour] = useState<boolean>(false)
+  const [displayHourEdition, setDisplayHourEdition] = useState<boolean>(false)
 
-  const [hours, setHour] = hourStore((state) => [state.hours, state.setHours]);
+  const [hours, setHours] = hourStore((state) => [state.hours, state.setHours])
 
   function editionFinished() {
-    setHoursEdit(false);
-    const inputs: NodeListOf<HTMLInputElement> =
-      document.querySelectorAll("table tr input");
+    setDisplayHourEdition(false)
+    const inputs: NodeListOf<HTMLInputElement> = document.querySelectorAll('table tr input')
     inputs.forEach((input) => {
-      const element = document.createElement("td");
-      element.innerText = input.value;
-      (input as Node).parentNode!.replaceChild(element, input);
-      const childs = (element as Node).parentNode!.children;
-      element.addEventListener("click", (e: MouseEvent) => {
+      const element = document.createElement('td')
+      element.innerText = input.value
+      ;(input as Node).parentNode!.replaceChild(element, input)
+      const childs = (element as Node).parentNode!.children
+      element.addEventListener('click', (e: MouseEvent) => {
         editingHours(
           e! as unknown as React.MouseEvent<HTMLElement>,
           (e!.target as HTMLElement).textContent,
           (element as Node).parentNode!.firstChild!.textContent,
-          childs[1] == element ? "lunch" : "dinner"
-        );
-        setHoursEdit(true);
-      });
-    });
+          childs[1] === element ? 'lunch' : 'dinner'
+        )
+        setDisplayHourEdition(true)
+      })
+    })
   }
 
   function editingHours(
@@ -36,68 +36,63 @@ export default function HourEditing() {
     day: string | null,
     time: string | null
   ) {
-    const element: HTMLInputElement = document.createElement("input");
-    element.classList.add(time as string);
-    element.setAttribute("id", day as string);
+    const element: HTMLInputElement = document.createElement('input')
+    element.classList.add(time as string)
+    element.setAttribute('id', day as string)
     element.onkeydown = (e) => {
-      if (e.code === "Enter") {
-        submitHourEdition(
-          document.querySelectorAll("article table tbody input")
-        );
+      if (e.code === 'Enter') {
+        submitHourEdition(document.querySelectorAll('article table tbody input'))
       }
-    };
-    element.value = text as string;
-    (event!.target as HTMLElement).parentNode!.replaceChild(
-      element,
-      event!.target as HTMLElement
-    );
+    }
+    element.value = text as string
+    ;(event!.target as HTMLElement).parentNode!.replaceChild(element, event!.target as HTMLElement)
   }
 
   async function submitHourEdition(elem: NodeListOf<HTMLInputElement>) {
-    const data: Array<object> = [];
+    const data: Array<object> = []
     for (let index = 0; index < elem.length; index++) {
-      const element = elem[index];
-      const day = elem[0].parentElement!.firstChild!.textContent;
-      const time = element.getAttribute("class");
-      data.push({ day: day, time: time, target: element.value });
+      const element = elem[index]
+      const day = elem[0].parentElement!.firstChild!.textContent
+      const time = element.getAttribute('class')
+      data.push({ day: day, time: time, target: element.value })
     }
 
-    let hourRegexTesting;
-    for (let i = 0; i < elem.length; i++) {
+    var hourRegexTesting: boolean
+    for (const inputs of elem) {
       const hourRegexe = new RegExp(
         /^(fermer)|([0-1][0-9]|2[0-4])h([1-5][0-9]|60|0[1-9]|[1-9]0)? - ([0-1][0-9]|2[0-4])h([1-5][0-9]|60|0[1-9]|[1-9]0)?$/dgim
-      );
-      const inputs = elem[i];
-      hourRegexTesting = hourRegexe.test(inputs.value);
+      )
+      hourRegexTesting = hourRegexe.test(inputs.value)
     }
     if (hourRegexTesting) {
-      setErrorHour(false);
-      const response = fetch("/admin/hoursEdition", {
-        method: "POST",
+      setErrorHour(false)
+      const response = fetch('/admin/hoursEdition', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          Accept: "*",
-          "Access-Control-Allow-Origin": "*",
+          'Content-Type': 'application/json',
+          'Accept': '*',
+          'Access-Control-Allow-Origin': '*',
         },
         body: JSON.stringify({
           data,
         }),
-      });
+      })
 
-      if ((await response).ok) {
-        response.then((r) => r.json()).then((data) => setHour(data.hours));
-        editionFinished();
+      if ((await response)!.ok) {
+        setErrorHour(false)
+        response.then((r) => r.json()).then((data) => setHours(data.hours))
+        editionFinished()
       } else {
-        setErrorHour(true);
+        setErrorHour(true)
       }
-    } else setErrorHour(true);
+    } else setErrorHour(true)
   }
 
   return (
     <>
       <h1>Horaires d&#39;ouvertures</h1>
       <p>(Cliquez sur les horaires pour les éditer)</p>
-      <p className={errorHour ? "format" : ""}>
+      <p className={errorHour ? 'format' : ''}>
         Format horaires, exemples : <br />
         12h - 15h, 12h30 - 15h10, fermer
       </p>
@@ -122,43 +117,31 @@ export default function HourEditing() {
                   <td>{elem.day}</td>
                   <td
                     onClick={(e: React.MouseEvent<HTMLElement>) => {
-                      editingHours(
-                        e,
-                        (e.target as HTMLElement).textContent,
-                        elem.day,
-                        "lunch"
-                      );
-                      setHoursEdit(true);
+                      editingHours(e, (e.target as HTMLElement).textContent, elem.day, 'lunch')
+                      setDisplayHourEdition(true)
                     }}
                   >
                     {elem.lunch}
                   </td>
                   <td
                     onClick={(e) => {
-                      editingHours(
-                        e,
-                        (e.target as HTMLElement).textContent,
-                        elem.day,
-                        "dinner"
-                      );
-                      setHoursEdit(true);
+                      editingHours(e, (e.target as HTMLElement).textContent, elem.day, 'dinner')
+                      setDisplayHourEdition(true)
                     }}
                   >
                     {elem.dinner}
                   </td>
                 </>
               </tr>
-            );
+            )
           })}
         </tbody>
       </table>
-      {hoursEdit ? (
+      {displayHourEdition ? (
         <div className={styles.ctaEditHours}>
           <button
             onClick={() =>
-              submitHourEdition(
-                document.querySelectorAll("article table tbody input")
-              )
+              submitHourEdition(document.querySelectorAll('article table tbody input'))
             }
           >
             <p>Édition finit</p>
@@ -167,5 +150,5 @@ export default function HourEditing() {
         </div>
       ) : null}
     </>
-  );
+  )
 }

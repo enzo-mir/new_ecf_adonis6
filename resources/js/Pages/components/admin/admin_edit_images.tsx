@@ -49,7 +49,7 @@ const AdminEditImages = ({
 
   function imageSubmition(e: FormEvent) {
     e.preventDefault()
-    if (!data.image) {
+    if (!data.image && imageEditionData.adding === true) {
       setValidationMessage('Une image doit être séléctionnée')
     } else {
       if (imageEditionData.adding) {
@@ -110,7 +110,9 @@ const AdminEditImages = ({
               <div
                 className={styles.addImageCase}
                 style={{
-                  background: urlRef.current ? 'url(' + urlRef.current + ')' : 'black',
+                  background: imageEditionData.url
+                    ? 'url(' + (urlRef.current || imageEditionData.url) + ')'
+                    : 'black',
                 }}
               >
                 <MdEditSquare color="#fff" />

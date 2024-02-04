@@ -4,7 +4,7 @@ import { allHours, allImages, getCardData } from '#functions/get_props_data'
 export default class PropsPagesController {
   async home({ inertia }: HttpContext) {
     return inertia.render('home', {
-      images: allImages[0],
+      images: await allImages(),
       hours: allHours[0],
     })
   }

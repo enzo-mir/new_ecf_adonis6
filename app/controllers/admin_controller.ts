@@ -11,7 +11,7 @@ export default class AdminController {
       return ctx.inertia.render('admin', {
         hours: allHours[0],
         cardData: await getCardData(),
-        images: allImages[0],
+        images: await allImages(),
       })
     } else {
       return ctx.inertia.render('undefined_page')
@@ -31,9 +31,7 @@ export default class AdminController {
             const allHoursToSend = await Database.rawQuery('SELECT * FROM `hours`')
             return ctx.response.json({ hours: allHoursToSend[0] })
           } else {
-            return ctx.response.status(400).json({
-              error: 'Une erreur est survenus lor de la mise à jour des données',
-            })
+            return ctx.response.badRequest()
           }
         } else if (element.time === 'dinner') {
           const rowUpdated = await Database.rawQuery(
@@ -43,9 +41,7 @@ export default class AdminController {
             const allHoursToSend = await Database.rawQuery('SELECT * FROM `hours`')
             return ctx.response.json({ hours: allHoursToSend[0] })
           } else {
-            return ctx.response.status(400).json({
-              error: 'Une erreur est survenus lor de la mise à jour des données',
-            })
+            return ctx.response.badRequest()
           }
         }
       }

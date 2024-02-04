@@ -17,6 +17,14 @@ export const imagesUpdateType = imagesAddType
   .extend({
     old_url: z.string(),
   })
-  .partial({
+  .omit({
     image: true,
+  })
+  .extend({
+    image: z
+      .any()
+      .refine((files) => files?.size <= 500000, {
+        message: 'Limite de taille : 500 Ko',
+      })
+      .nullable(),
   })

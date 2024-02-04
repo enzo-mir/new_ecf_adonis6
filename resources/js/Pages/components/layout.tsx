@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
       hours: Array<HourDataType>
       user?: User
       cardData?: CardDataType
-      imagesData?: Image[]
+      images?: Image[]
     }
   }
 
@@ -31,7 +31,7 @@ const Layout = ({ children }) => {
   useEffect(() => {
     setHours(props.hours)
     props.cardData && setCardData(props.cardData)
-    props.imagesData && setImages(props.imagesData)
+    props.images && setImages(props.images)
     if (props.user) {
       if (props.user.role === 1) {
         setConnectedAdmin(true)

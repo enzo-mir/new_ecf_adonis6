@@ -16,9 +16,12 @@ async function getCardData() {
   }
 }
 
-const allImages: z.infer<typeof imagesAddType>[][] = await Database.rawQuery(
-  'SELECT `id`, `title`, `description`, `url` FROM `images`'
-)
+async function allImages() {
+  const images = (await Database.rawQuery(
+    'SELECT `id`, `title`, `description`, `url` FROM `images`'
+  )) as z.infer<typeof imagesAddType>[][]
+  return images[0]
+}
 const allHours: z.infer<typeof HourType>[][] = await Database.rawQuery(
   'SELECT * FROM `hours` WHERE 1'
 )
