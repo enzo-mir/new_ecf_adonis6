@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import Header from './header.tsx'
-import Footer from './footer.js'
+import Header from './header'
+import Footer from './footer'
 import { usePage } from '@inertiajs/react'
 import { connectStore, userDataStore } from '../../data/store/connect.store.js'
 import { cardStore, hourStore, imageStore } from '../../data/store/api_data.store.js'

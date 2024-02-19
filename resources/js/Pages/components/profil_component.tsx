@@ -10,16 +10,8 @@ import type { User } from '../../types/user_type.store.js'
 import styles from '../../../css/profil.module.css'
 import overlayStyles from '../../../css/overlay.module.css'
 const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean): void }) => {
-  const [userData, setuserData] = userDataStore((state) => [state.userData, state.setUserData])
-  const { post, data, setData, reset, processing } = useForm({
-    name: userData.name,
-    email: userData.email,
-    guests: userData.guests,
-    password: '',
-    alergy: userData.alergy,
-  })
+  const userData = userDataStore((state) => state.userData)
   const setConnectedUser = connectStore((state) => state.setConnectedUser)
-
   const [validationMessage, setValidationMessage] = useState<string>('')
   const [editable, setEditable] = useState<boolean>(false)
 
@@ -30,12 +22,19 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
       setEditable(false)
     }
   }, [])
+  const { post, data, setData, reset, processing } = useForm({
+    name: userData.name,
+    email: userData.email,
+    guests: userData.guests,
+    password: '',
+    alergy: userData.alergy,
+  })
 
-  async function validationForm(e: FormEvent) {
+  function validationForm(e: FormEvent) {
     e.preventDefault()
     setValidationMessage('')
     try {
-      await updateZodType.parseAsync(data)
+      updateZodType.parse(data)
       post('/profile/update', {
         data,
         onError: (err) => {
@@ -64,7 +63,7 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
             setDisplayProfil(false)
             setConnectedUser(false)
             reset()
-          }, 1500)
+          }, 1000)
         },
       })
     }
@@ -78,7 +77,7 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
             setConnectedUser(false)
             reset()
             setDisplayProfil(false)
-          }, 1500)
+          }, 1000)
         },
         onError: (err) => {
           setValidationMessage(err as unknown as string)
