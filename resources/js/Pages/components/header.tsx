@@ -4,7 +4,7 @@ import { connectStore, userDataStore } from '../../data/store/connect.store.js'
 import { AnimatePresence } from 'framer-motion'
 import { Link, useForm } from '@inertiajs/react'
 import overlayStyles from '../../../css/overlay.module.css'
-const Reserv = React.lazy(() => import('./reservation.tsx'))
+const Reserv = React.lazy(() => import('./reservation.js'))
 const PopReservation = React.lazy(() => import('./pop_reservation.js'))
 const ProfilComponent = React.lazy(() => import('./profil_component.js'))
 import styles from '../../../css/header.module.css'
@@ -58,13 +58,6 @@ const Header = () => {
           onClick={() => {
             post('/profile/logout', {
               onSuccess: () => {
-                setuserData({
-                  name: '',
-                  email: '',
-                  password: '',
-                  guests: 0,
-                  alergy: '',
-                })
                 setIsAdmin(false)
               },
             })

@@ -24,7 +24,7 @@ Router.group(() => {
 }).prefix('/reservation')
 
 Router.group(() => {
-  Router.post('/update', [ProfilesController, 'update'])
+  Router.post('/update', [ProfilesController, 'update']).use(middleware.auth())
   Router.post('/logout', [ProfilesController, 'logout'])
   Router.post('/delete', [ProfilesController, 'delete'])
 }).prefix('profile')
@@ -37,6 +37,9 @@ Router.group(() => {
 Router.group(() => {
   Router.get('', [AdminController, 'index']).use(middleware.auth())
   Router.post('/hoursEdition', [AdminController, 'hours'])
+  Router.post('/userUpdate', [AdminController, 'userUpdate'])
+  Router.post('/deletUser/:id', [AdminController, 'deleteUser'])
+  Router.post('/createUser', [AdminController, 'createUser'])
 }).prefix('/admin')
 
 Router.post('/card/update', [AdminController, 'cardUpdate'])

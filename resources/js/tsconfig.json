@@ -1,4 +1,5 @@
 {
+  "include": ["./**/*"],
   "compilerOptions": {
     "target": "ESNext",
     "jsx": "react",
@@ -13,7 +14,5 @@
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "allowImportingTsExtensions": true,
   },
-  "include": ["env.d.ts", "./**/*.ts", "./**/*.tsx"],
 }

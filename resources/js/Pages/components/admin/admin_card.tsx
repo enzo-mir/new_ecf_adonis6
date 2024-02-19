@@ -1,27 +1,23 @@
-import { useEffect } from "react";
-import { cardStore } from "../../../data/store/api_data.store";
-import React from "react";
-import { MdEditSquare } from "react-icons/md";
-import styles from "../../../../css/admin.module.css";
+import { useEffect } from 'react'
+import { cardStore } from '../../../data/store/api_data.store.js'
+import React from 'react'
+import { MdEditSquare } from 'react-icons/md'
+import styles from '../../../../css/admin.module.css'
 
 const AdminCard = ({
   display,
   setDisplay,
   setData,
 }: {
-  display: boolean;
-  setDisplay(val: boolean): void;
-  setData(val: object): void;
+  display: boolean
+  setDisplay(val: boolean): void
+  setData(val: object): void
 }) => {
-  const { dishs, starters, desserts, menus } = cardStore(
-    (state) => state.cardStore
-  );
+  const { dishs, starters, desserts, menus } = cardStore((state) => state.cardStore)
 
   useEffect(() => {
-    display
-      ? (document.body.style.overflow = "hidden")
-      : document.body.removeAttribute("style");
-  }, [display]);
+    display ? (document.body.style.overflow = 'hidden') : document.body.removeAttribute('style')
+  }, [display])
 
   function editableCard(
     id: number,
@@ -29,7 +25,7 @@ const AdminCard = ({
     desc: string,
     price: number | null,
     formula: string | null,
-    choiceEdit: "starters" | "dishs" | "desserts" | "formula"
+    choiceEdit: 'starters' | 'dishs' | 'desserts' | 'formula'
   ) {
     setData({
       id,
@@ -38,8 +34,8 @@ const AdminCard = ({
       price,
       formula,
       choiceEdit,
-    });
-    setDisplay(true);
+    })
+    setDisplay(true)
   }
 
   return (
@@ -64,14 +60,14 @@ const AdminCard = ({
                         food.description,
                         food.price,
                         null,
-                        "starters"
+                        'starters'
                       )
                     }
                   >
                     <MdEditSquare color="#fff" />
                   </button>
                 </div>
-              ) : null;
+              ) : null
             })}
           </div>
           <div className="partage">
@@ -90,14 +86,14 @@ const AdminCard = ({
                         food.description,
                         food.price,
                         null,
-                        "starters"
+                        'starters'
                       )
                     }
                   >
                     <MdEditSquare color="#fff" />
                   </button>
                 </div>
-              ) : null;
+              ) : null
             })}
           </div>
         </>
@@ -115,20 +111,13 @@ const AdminCard = ({
                   <p>{food.price}€</p>
                   <button
                     onClick={() =>
-                      editableCard(
-                        food.id,
-                        food.name,
-                        food.description,
-                        food.price,
-                        null,
-                        "dishs"
-                      )
+                      editableCard(food.id, food.name, food.description, food.price, null, 'dishs')
                     }
                   >
                     <MdEditSquare color="#fff" />
                   </button>
                 </div>
-              ) : null;
+              ) : null
             })}
           </div>
           <div className="partage">
@@ -141,20 +130,13 @@ const AdminCard = ({
                   <p>{food.price}€</p>
                   <button
                     onClick={() =>
-                      editableCard(
-                        food.id,
-                        food.name,
-                        food.description,
-                        food.price,
-                        null,
-                        "dishs"
-                      )
+                      editableCard(food.id, food.name, food.description, food.price, null, 'dishs')
                     }
                   >
                     <MdEditSquare color="#fff" />
                   </button>
                 </div>
-              ) : null;
+              ) : null
             })}
           </div>
         </>
@@ -170,20 +152,13 @@ const AdminCard = ({
                 <p>{food.price}€</p>
                 <button
                   onClick={() =>
-                    editableCard(
-                      food.id,
-                      food.name,
-                      food.description,
-                      food.price,
-                      null,
-                      "desserts"
-                    )
+                    editableCard(food.id, food.name, food.description, food.price, null, 'desserts')
                   }
                 >
                   <MdEditSquare color="#fff" />
                 </button>
               </div>
-            );
+            )
           })}
         </div>
       </div>
@@ -204,19 +179,19 @@ const AdminCard = ({
                       food.description,
                       null,
                       food.formula,
-                      "formula"
+                      'formula'
                     )
                   }
                 >
                   <MdEditSquare color="#fff" />
                 </button>
               </div>
-            );
+            )
           })}
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default AdminCard;
+export default AdminCard

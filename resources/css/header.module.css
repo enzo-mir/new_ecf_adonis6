@@ -30,7 +30,7 @@
   min-height: 20px;
   background-color: transparent;
   aspect-ratio: 1/1;
-  background-image: url("../js/assets/images/barre-de-menu.png");
+  background-image: url('../js/assets/images/barre-de-menu.png');
   background-size: contain;
   margin-inline: 1em;
   right: 0px;
@@ -58,7 +58,7 @@
   text-underline-offset: 8px;
   padding: 1rem;
 }
-.header_container a[aria-current="page"] {
+.header_container a[aria-current='page'] {
   text-decoration: underline;
   font-weight: 600;
 }
@@ -151,10 +151,10 @@
     transition: all 0.3s ease-out;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.15);
   }
-  .header[data-visible="true"] .header_container {
+  .header[data-visible='true'] .header_container {
     height: clamp(350px, 40vh, 800px);
   }
-  .header[data-visible="true"] .profil:has(button):has(.reservations) {
+  .header[data-visible='true'] .profil:has(button):has(.reservations) {
     flex-direction: column-reverse;
   }
 
@@ -181,7 +181,7 @@
   }
 }
 @media screen and (min-width: 600px) {
-  .header[data-visible="true"] {
+  .header[data-visible='true'] {
     height: 0vh;
     overflow: hidden;
   }

@@ -76,7 +76,7 @@
   border-top-right-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
 }
-.option_reservation input[type="date"] {
+.option_reservation input[type='date'] {
   background-color: var(--darker-color);
   color: #fff;
   border: none;
@@ -89,11 +89,10 @@
 }
 
 .date_calendar::-webkit-calendar-picker-indicator {
-  background: url("../js/assets/images/down-arrow.ico");
+  background: url('../js/assets/images/down-arrow.ico');
   background-size: cover;
   width: 20px;
   height: 20px;
-
 }
 .date_calendar::-webkit-calendar-picker-indicator:hover {
   cursor: pointer;
@@ -126,10 +125,10 @@
     filter: brightness(70%);
   }
 }
-.hours_list button[data-selected="true"] {
+.hours_list button[data-selected='true'] {
   filter: brightness(70%);
 }
-.hours_list button[data-selected="false"] {
+.hours_list button[data-selected='false'] {
   filter: brightness(100%);
 }
 

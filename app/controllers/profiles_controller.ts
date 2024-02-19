@@ -7,21 +7,24 @@ import Hash from '@adonisjs/core/services/hash'
 export default class ProfilesController {
   async update(ctx: HttpContext) {
     try {
-      const userUpdateData = updateZodType.parse(ctx.request.all())
+      const userUpdateData = await updateZodType.parseAsync(ctx.request.all())
+
       if (userUpdateData.password === null) {
         const updateQuery = await Database.rawQuery(
-          `UPDATE users SET name = "${userUpdateData.name}",email = "${userUpdateData.email}",guests = ${userUpdateData.guests},alergy = "${userUpdateData.alergy}" WHERE id = "${(await ctx.auth.use('web').authenticate())!.id}"`
+          `UPDATE users SET name = "${userUpdateData.name}",email = "${userUpdateData.email}",guests = ${userUpdateData.guests},alergy = "${userUpdateData.alergy}" WHERE email = "${ctx.auth.user?.email}"`
         )
+        console.log(updateQuery)
+
         if (updateQuery[0].changedRows > 0) {
           return ctx.response.redirect().back()
         } else {
           throw new Error('Echec lors de la mise à jour des données')
         }
       } else {
-        let hashedPassword = await Hash.make(userUpdateData.password!)
+        let hashedPassword = await Hash.make(userUpdateData.password)
 
         const updateQuery = await Database.rawQuery(
-          `UPDATE users SET name = "${userUpdateData.name}",email = "${userUpdateData.email}",guests = ${userUpdateData.guests},alergy = "${userUpdateData.alergy}",password="${hashedPassword}" WHERE id = "${(await ctx.auth.use('web').authenticate())!.id}"`
+          `UPDATE users SET name = "${userUpdateData.name}",email = "${userUpdateData.email}",guests = ${userUpdateData.guests},alergy = "${userUpdateData.alergy}",password="${hashedPassword}" WHERE email = "${ctx.auth.user?.email}"`
         )
 
         if (updateQuery[0].changedRows > 0) {
@@ -31,16 +34,9 @@ export default class ProfilesController {
         }
       }
     } catch (error) {
-      if (error.code === 'ER_DUP_ENTRY') {
-        ctx.session.flash({
-          errors: "L'email est déjà utilisé",
-        })
-      } else {
-        ctx.session.flash({
-          errors:
-            error instanceof z.ZodError ? JSON.parse(error.message)[0]?.message : error.message,
-        })
-      }
+      ctx.session.flash({
+        errors: error instanceof z.ZodError ? JSON.parse(error.message)[0]?.message : error.message,
+      })
       return ctx.response.redirect().back()
     }
   }

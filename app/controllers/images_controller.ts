@@ -99,7 +99,7 @@ export default class ImagesController {
         }
       } else {
         if (imagesData.image && imagesData.old_url) {
-          this.delete(ctx, imagesData.old_url)
+          this.deleteImages(ctx, imagesData.old_url)
           this.upload(ctx)
         }
       }

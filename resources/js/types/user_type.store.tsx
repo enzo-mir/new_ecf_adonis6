@@ -1,13 +1,25 @@
-import type { CurrentReservationType } from './data_api_types'
-
 export type User = {
+  id: number
   name: string
   email: string
-  password: string
   guests: number | null
   alergy: string
   role: 0 | 1
-  currentReservation?: CurrentReservationType
+  currentReservation: Array<CurrentReservationType>
+}
+
+export type UsersInformationType = {
+  id: number
+  name: string
+  email: string
+  role: 0 | 1
+}
+
+export type CurrentReservationType = {
+  guests: number
+  date: string
+  hours: string
+  email: string
 }
 
 export type UserDataType = {

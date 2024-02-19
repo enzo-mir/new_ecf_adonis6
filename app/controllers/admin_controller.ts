@@ -1,10 +1,10 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { allHours, allImages, getCardData } from '#functions/get_props_data'
+import { allHours, allImages, getCardData, getUsersInformation } from '#functions/get_props_data'
 import { HourType } from '#types/hours_type'
 import { z } from 'zod'
 import { cardUpdateType } from '#types/card_managment_type'
 import Database from '@adonisjs/lucid/services/db'
-
+import { userconfigCreateUser, usersConfigScheama } from '#types/user_type'
 export default class AdminController {
   async index(ctx: HttpContext) {
     if (ctx.auth.user?.role === 1) {
@@ -12,6 +12,7 @@ export default class AdminController {
         hours: allHours[0],
         cardData: await getCardData(),
         images: await allImages(),
+        usersInformation: await getUsersInformation(),
       })
     } else {
       return ctx.inertia.render('undefined_page')
@@ -87,6 +88,100 @@ export default class AdminController {
     } catch (error) {
       ctx.session.flash({
         errors: error instanceof z.ZodError ? JSON.parse(error.message)[0]?.message : error.message,
+      })
+      return ctx.response.redirect().back()
+    }
+  }
+  async userUpdate(ctx: HttpContext) {
+    try {
+      const usersInfo = usersConfigScheama.parse(ctx.request.all())
+
+      if (usersInfo.password === '') {
+        let updateUser
+        if (usersInfo.emailChange) {
+          updateUser = await Database.rawQuery(
+            'UPDATE `users` SET name = ?, email = ?, role = ? WHERE id = ?',
+            [usersInfo.name, usersInfo.email, usersInfo.role, usersInfo.id]
+          )
+        } else {
+          updateUser = await Database.rawQuery(
+            'UPDATE `users` SET name = ?, role = ? WHERE id = ?',
+            [usersInfo.name, usersInfo.role, usersInfo.id]
+          )
+        }
+
+        if (updateUser[0].affectedRows > 0) {
+          ctx.response.redirect().back()
+        } else {
+          throw new Error('Echec lors de la mise à jour des données')
+        }
+      } else {
+        let updateUser
+        if (usersInfo.emailChange) {
+          updateUser = await Database.rawQuery(
+            'UPDATE `users` SET name = ?, role = ?, password = ? WHERE id = ?',
+            [usersInfo.name, usersInfo.role, usersInfo.password, usersInfo.id]
+          )
+        } else {
+          updateUser = await Database.rawQuery(
+            'UPDATE `users` SET name = ?, email = ?, role = ?, password = ? WHERE id = ?',
+            [usersInfo.name, usersInfo.email, usersInfo.role, usersInfo.password, usersInfo.id]
+          )
+        }
+        if (updateUser[0].affectedRows > 0) {
+          ctx.response.redirect().back()
+        } else {
+          throw new Error('Echec lors de la mise à jour des données')
+        }
+      }
+    } catch (error) {
+      ctx.session.flash({
+        errors:
+          error instanceof z.ZodError
+            ? JSON.parse(error.message)[0]?.message
+            : error.code === 'ER_DUP_ENTRY'
+              ? "L'email est déja utilisé"
+              : error.message,
+      })
+      return ctx.response.redirect().back()
+    }
+  }
+  async deleteUser(ctx: HttpContext) {
+    const params: number = ctx.request.param('id')
+    try {
+      const lineDeleted = await Database.rawQuery('DELETE FROM `users` WHERE `id` = ?', [params])
+      if (lineDeleted[0].affectedRows) {
+        ctx.response.redirect().back()
+      } else {
+        throw new Error('Une erreur est survenus lors de la suppression du compte')
+      }
+    } catch (error) {
+      ctx.session.flash({
+        errors: error.message,
+      })
+      return ctx.response.redirect().back()
+    }
+  }
+  async createUser(ctx: HttpContext) {
+    try {
+      const userInfos = userconfigCreateUser.parse(ctx.request.all())
+      try {
+        await Database.rawQuery(
+          `INSERT INTO users (name, email, password, role) VALUES ("${userInfos.name}", "${userInfos.email}", "${userInfos.password}", ${1})`
+        )
+
+        ctx.response.redirect().back()
+      } catch (error) {
+        throw new Error('Une erreur est survenus lors de la création du compte')
+      }
+    } catch (error) {
+      ctx.session.flash({
+        errors:
+          error instanceof z.ZodError
+            ? JSON.parse(error.message)[0]?.message
+            : error.code === 'ER_DUP_ENTRY'
+              ? "L'email est déja utilisé"
+              : error.message,
       })
       return ctx.response.redirect().back()
     }

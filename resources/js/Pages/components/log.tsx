@@ -1,6 +1,6 @@
-import { type FormEvent, useState } from 'react'
-import { Cross } from '../../assets/style/cross.js'
-import { LoginDataType, signinType } from '../../types/user_managment_type.js'
+import { type FormEvent, useEffect, useState } from 'react'
+import { Cross } from '../../assets/style/cross'
+import { LoginDataType, signinType } from '../../types/user_managment_type'
 import { motion } from 'framer-motion'
 import { useForm } from '@inertiajs/react'
 import React from 'react'
@@ -17,7 +17,21 @@ const Log = ({
 }) => {
   const [page, setPage] = useState(togglePage)
   const [fromConfirmation, setFormConfirmation] = useState('')
-  const { data, setData, post, reset, processing } = useForm()
+  const { data, setData, post, reset, processing } = useForm({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    guests: 0,
+    alergy: '',
+  })
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.removeAttribute('style')
+    }
+  }, [])
 
   const submitSignin = async (e: FormEvent) => {
     e.preventDefault()
@@ -195,10 +209,18 @@ const Log = ({
               {page === 'signin' ? 'Créer un compte' : 'Connection'}
             </button>
             <p
-              onClick={() => {
+              tabIndex={0}
+              onMouseDown={() => {
                 setPage(page === 'signin' ? 'login' : 'signin')
                 setFormConfirmation('')
                 reset()
+              }}
+              onKeyDown={(e) => {
+                if (e.code === 'Enter') {
+                  setPage(page === 'signin' ? 'login' : 'signin')
+                  setFormConfirmation('')
+                  reset()
+                }
               }}
             >
               {page === 'signin'

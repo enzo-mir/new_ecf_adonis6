@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { hourStore } from '../../../data/store/api_data.store'
+import { hourStore } from '../../../data/store/api_data.store.js'
 import { MdEditSquare } from 'react-icons/md'
 import styles from '../../../../css/admin.module.css'
 import React from 'react'

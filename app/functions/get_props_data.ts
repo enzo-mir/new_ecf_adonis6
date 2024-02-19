@@ -25,5 +25,8 @@ async function allImages() {
 const allHours: z.infer<typeof HourType>[][] = await Database.rawQuery(
   'SELECT * FROM `hours` WHERE 1'
 )
-
-export { getCardData, allImages, allHours }
+const getUsersInformation = async () => {
+  const allUsers = await Database.rawQuery('SELECT `id`,`name`,`email`,`role` FROM users ')
+  return allUsers[0]
+}
+export { getCardData, allImages, allHours, getUsersInformation }

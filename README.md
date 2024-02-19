@@ -1,6 +1,7 @@
 # Setup inertia app with Adonis v6 with React
 
 ## Dependency
+
 [@adonisjs/inertia](https://www.npmjs.com/package/@adonisjs/inertia)
 
 ## Installation
@@ -22,7 +23,8 @@ pnpm add @adonisjs/inertia
 # ace command from adonis
 node ace configure @adonisjs/inertia
 ```
-And follow the instruction. 
+
+And follow the instruction.
 (notice : accept to install the inertia and react packages recommanded)
 
 ## Vite configuration
@@ -52,7 +54,7 @@ export default defineConfig({
 })
 ```
 
-## edge configuration 
+## edge configuration
 
 `/resources/view/home.edge`
 

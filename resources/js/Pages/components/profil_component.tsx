@@ -63,14 +63,6 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
           setTimeout(() => {
             setDisplayProfil(false)
             setConnectedUser(false)
-            setuserData({
-              name: '',
-              email: '',
-              password: '',
-              guests: 0,
-              alergy: '',
-            })
-            setDisplayProfil(false)
             reset()
           }, 1500)
         },
@@ -85,13 +77,6 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
             setDisplayProfil(false)
             setConnectedUser(false)
             reset()
-            setuserData({
-              name: '',
-              email: '',
-              password: '',
-              guests: 0,
-              alergy: '',
-            })
             setDisplayProfil(false)
           }, 1500)
         },

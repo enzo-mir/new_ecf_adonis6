@@ -4,12 +4,12 @@ export default async function postUpdateCard(
   cardInfo: { title: string; desc: string; price: number; formula: string },
   choiceEdit: string
 ) {
-  const resp = await fetch("/updateCard", {
-    method: "POST",
+  const resp = await fetch('/updateCard', {
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
-      Accept: "*",
-      "Access-Control-Allow-Origin": "*",
+      'Content-Type': 'application/json',
+      'Accept': '*',
+      'Access-Control-Allow-Origin': '*',
     },
     body: JSON.stringify({
       oldTitle,
@@ -17,6 +17,6 @@ export default async function postUpdateCard(
       cardInfo,
       choiceEdit,
     }),
-  });
-  return await resp.json();
+  })
+  return await resp.json()
 }

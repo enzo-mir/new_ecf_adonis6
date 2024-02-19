@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Cross = styled.button`
   position: relative;
@@ -14,7 +14,7 @@ export const Cross = styled.button`
 
   &::after,
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     background-color: white;
     height: 100%;
@@ -31,4 +31,4 @@ export const Cross = styled.button`
     cursor: pointer;
     filter: brightness(70%);
   }
-`;
+`
