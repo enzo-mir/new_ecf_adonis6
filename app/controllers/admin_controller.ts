@@ -170,20 +170,19 @@ export default class AdminController {
         const hashedPassword = await Hash.make(userInfos.password)
         await Database.rawQuery(
           `INSERT INTO users (name, email, password, role) VALUES ("${userInfos.name}", "${userInfos.email}", "${hashedPassword}", ${1})`
-        )
+        ).catch(() => {
+          throw new Error("L'email est déja utilisé")
+        })
 
         ctx.response.redirect().back()
       } catch (error) {
-        throw new Error(error)
+        throw Error(error.message || 'Erreur lors de la création du compte')
       }
     } catch (error) {
+      console.log(error)
+
       ctx.session.flash({
-        errors:
-          error instanceof z.ZodError
-            ? JSON.parse(error.message)[0]?.message
-            : error.code === 'ER_DUP_ENTRY'
-              ? "L'email est déja utilisé"
-              : error.message,
+        errors: error instanceof z.ZodError ? JSON.parse(error.message)[0]?.message : error.message,
       })
       return ctx.response.redirect().back()
     }

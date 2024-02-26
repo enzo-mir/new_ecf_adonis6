@@ -10,6 +10,7 @@ const AdminUser = ({ usersInfo }: { usersInfo: Array<UsersInformationType> }) =>
   const [deleteId, setDeleteId] = useState<number>(null)
   const [rolefilter, setRoleFilter] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
+
   const {
     post: postDeleteAcc,
     data: deleteAccData,
@@ -32,6 +33,8 @@ const AdminUser = ({ usersInfo }: { usersInfo: Array<UsersInformationType> }) =>
     password: '',
   })
   const userData = userDataStore((state) => state.userData)
+  console.log(userData)
+
   useEffect(() => {
     setTimeout(() => {
       setErrorMessage('')

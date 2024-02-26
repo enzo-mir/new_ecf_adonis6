@@ -29,12 +29,15 @@ const Layout = ({ children }) => {
   const setImages = imageStore((state) => state.setImages)
 
   useEffect(() => {
+    console.log(props)
+
     setHours(props.hours)
     props.cardData && setCardData(props.cardData)
     props.images && setImages(props.images)
     if (props.user) {
       if (props.user.role === 1) {
         setConnectedAdmin(true)
+        setUserData(props.user)
       } else {
         setUserData({
           ...props.user,
