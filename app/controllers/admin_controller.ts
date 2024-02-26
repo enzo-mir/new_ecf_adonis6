@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { cardUpdateType } from '#types/card_managment_type'
 import Database from '@adonisjs/lucid/services/db'
 import { userconfigCreateUser, usersConfigScheama } from '#types/user_type'
+import Hash from '@adonisjs/core/services/hash'
 export default class AdminController {
   async index(ctx: HttpContext) {
     if (ctx.auth.user?.role === 1) {
@@ -166,13 +167,14 @@ export default class AdminController {
     try {
       const userInfos = userconfigCreateUser.parse(ctx.request.all())
       try {
+        const hashedPassword = await Hash.make(userInfos.password)
         await Database.rawQuery(
-          `INSERT INTO users (name, email, password, role) VALUES ("${userInfos.name}", "${userInfos.email}", "${userInfos.password}", ${1})`
+          `INSERT INTO users (name, email, password, role) VALUES ("${userInfos.name}", "${userInfos.email}", "${hashedPassword}", ${1})`
         )
 
         ctx.response.redirect().back()
       } catch (error) {
-        throw new Error('Une erreur est survenus lors de la création du compte')
+        throw new Error(error)
       }
     } catch (error) {
       ctx.session.flash({

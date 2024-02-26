@@ -13,8 +13,6 @@ export default class ProfilesController {
         const updateQuery = await Database.rawQuery(
           `UPDATE users SET name = "${userUpdateData.name}",email = "${userUpdateData.email}",guests = ${userUpdateData.guests},alergy = "${userUpdateData.alergy}" WHERE email = "${ctx.auth.user?.email}"`
         )
-        console.log(updateQuery)
-
         if (updateQuery[0].changedRows > 0) {
           return ctx.response.redirect().back()
         } else {
