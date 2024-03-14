@@ -10,11 +10,19 @@ import AdminController from '#controllers/admin_controller'
 import AuthentificationsController from '#controllers/authentifications_controller'
 import ImagesController from '#controllers/images_controller'
 import ProfilesController from '#controllers/profiles_controller'
+<<<<<<< HEAD
 import PropsPagesController from '#controllers/props_pages_controller'
+=======
+>>>>>>> origin/release
 import ReservationsController from '#controllers/reservations_controller'
 import { HttpContext } from '@adonisjs/core/http'
 import Router from '@adonisjs/core/services/Router'
 import { middleware } from './kernel.js'
+<<<<<<< HEAD
+=======
+import PropsPagesController from '#controllers/props_pages_controller'
+
+>>>>>>> origin/release
 Router.get('/', [PropsPagesController, 'home'])
 Router.get('carte', [PropsPagesController, 'card'])
 

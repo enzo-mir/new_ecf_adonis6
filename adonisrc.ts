@@ -10,11 +10,15 @@ export default defineConfig({
   | will be scanned automatically from the "./commands" directory.
   |
   */
+<<<<<<< HEAD
   commands: [
     () => import('@adonisjs/core/commands'),
     () => import('@adonisjs/lucid/commands'),
     () => import('@adonisjs/bouncer/commands'),
   ],
+=======
+  commands: [() => import('@adonisjs/core/commands'), () => import('@adonisjs/lucid/commands')],
+>>>>>>> origin/release
 
   /*
   |--------------------------------------------------------------------------
@@ -38,10 +42,17 @@ export default defineConfig({
     () => import('@adonisjs/vite/vite_provider'),
     () => import('@adonisjs/shield/shield_provider'),
     () => import('@adonisjs/static/static_provider'),
+<<<<<<< HEAD
     () => import('@adonisjs/lucid/database_provider'),
     () => import('@adonisjs/auth/auth_provider'),
     () => import('@adonisjs/inertia/inertia_provider'),
     () => import('@adonisjs/bouncer/bouncer_provider'),
+=======
+    () => import('@adonisjs/cors/cors_provider'),
+    () => import('@adonisjs/lucid/database_provider'),
+    () => import('@adonisjs/auth/auth_provider'),
+    () => import('@adonisjs/inertia/inertia_provider')
+>>>>>>> origin/release
   ],
 
   /*
@@ -78,6 +89,19 @@ export default defineConfig({
     ],
     forceExit: false,
   },
+<<<<<<< HEAD
+=======
+
+  /*
+  |--------------------------------------------------------------------------
+  | Metafiles
+  |--------------------------------------------------------------------------
+  |
+  | A collection of files you want to copy to the build folder when creating
+  | the production build.
+  |
+  */
+>>>>>>> origin/release
   metaFiles: [
     {
       pattern: 'resources/views/**/*.edge',
@@ -88,4 +112,12 @@ export default defineConfig({
       reloadServer: false,
     },
   ],
+<<<<<<< HEAD
+=======
+
+  assetsBundler: false,
+  unstable_assembler: {
+    onBuildStarting: [() => import('@adonisjs/vite/build_hook')],
+  },
+>>>>>>> origin/release
 })

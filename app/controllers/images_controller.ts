@@ -4,7 +4,10 @@ import { imagesAddType, imagesUpdateType } from '#types/image_edit_type'
 import Application from '@adonisjs/core/services/app'
 import { z } from 'zod'
 import fs from 'node:fs'
+<<<<<<< HEAD
 import { allImages } from '#functions/get_props_data'
+=======
+>>>>>>> origin/release
 export default class ImagesController {
   async deleteImages(ctx: HttpContext, link: string | null) {
     const url: string = link || ctx.request.only(['url']).url
@@ -16,15 +19,23 @@ export default class ImagesController {
           if (err) throw new Error('Erreur lors de la suppression')
         })
         await Database.rawQuery(`DELETE from images WHERE url = "${url}"`)
+<<<<<<< HEAD
         return ctx.response.status(200).json({
           images: await allImages(),
         })
+=======
+        return ctx.response.redirect().back()
+>>>>>>> origin/release
       } catch (error) {
         ctx.session.flash({
           errors:
             error instanceof z.ZodError ? JSON.parse(error.message)[0]?.message : error.message,
         })
+<<<<<<< HEAD
         return ctx.response.redirect().status(400).back()
+=======
+        return ctx.response.redirect().back()
+>>>>>>> origin/release
       }
     } else {
       ctx.session.flash({
@@ -82,12 +93,20 @@ export default class ImagesController {
 
       if (imagesData.title || imagesData.description) {
         const updatedLine = await Database.rawQuery(
+<<<<<<< HEAD
           `UPDATE images SET title = "${imagesData.title}", description = "${imagesData.description}" WHERE url = "${imagesData.old_url}"`
+=======
+          `UPDATE images SET title = "${imagesData.title}", description = "${imagesData.description}" WHERE id = ${imagesData.id}`
+>>>>>>> origin/release
         )
         if (updatedLine[0].affectedRows > 0) {
           if (imagesData.image && imagesData.old_url) {
             this.deleteImages(ctx, imagesData.old_url!)
             this.upload(ctx)
+<<<<<<< HEAD
+=======
+            return ctx.response.redirect().back()
+>>>>>>> origin/release
           }
 
           return ctx.response.redirect().back()
@@ -101,6 +120,10 @@ export default class ImagesController {
         if (imagesData.image && imagesData.old_url) {
           this.deleteImages(ctx, imagesData.old_url)
           this.upload(ctx)
+<<<<<<< HEAD
+=======
+          return ctx.response.redirect().back()
+>>>>>>> origin/release
         }
       }
     } catch (error) {
