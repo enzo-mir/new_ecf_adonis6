@@ -16,15 +16,13 @@ export const updateZodType = z.object({
     message: 'Le champs nom doit contenir uniquement des lettres',
   }),
   email: z.string().email({ message: 'email invalide' }),
-  password:
-    z.null() ||
-    z
-      .string()
-      .refine((value) => /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/.test(value), {
-        message:
-          "Le mot de passe doit être composé d'une majuscule, minuscule, d'un chiffre et avoir une longueur de 8 charactères",
-      })
-      .optional(),
+  password: z
+    .string()
+    .refine((value) => /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/.test(value), {
+      message:
+        "Le mot de passe doit être composé d'une majuscule, minuscule, d'un chiffre et avoir une longueur de 8 charactères",
+    })
+    .nullable(),
   guests: z
     .number()
     .min(1, { message: "Le nombre d'invité doit être supérieur à 1" })
