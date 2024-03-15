@@ -4,8 +4,8 @@ import { send_mail_password_forgot } from '#services/mailer_service'
 
 export default class PropsPagesController {
   async home({ inertia }: HttpContext) {
-    await send_mail_password_forgot('miraglioenzo93@gmail.com')
-    return inertia.render('home', {
+    /*     await send_mail_password_forgot('miraglioenzo93@gmail.com')
+     */ return inertia.render('home', {
       images: await allImages(),
       hours: allHours[0],
     })

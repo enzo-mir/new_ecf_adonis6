@@ -14,9 +14,10 @@ export const userDataStore = create<UserDataType>((set) => ({
     id: 0,
     name: '',
     email: '',
-    password: '',
     guests: 0,
     alergy: '',
+    role: 0,
+    currentReservation: [],
   },
   setUserData: (val) => set(() => ({ userData: val })),
 }))

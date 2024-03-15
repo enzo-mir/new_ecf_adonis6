@@ -4,6 +4,7 @@
   gap: 30px;
   text-align: center;
 }
+
 .validationMessage {
   background: var(--primary-color);
   padding: 0.25em;

@@ -4,8 +4,8 @@ import { defineConfig, transports } from '@adonisjs/mail'
 const mailConfig = defineConfig({
   default: 'smtp',
   from: {
-    address: env.get('STMP_EMAIL'),
-    name: env.get('STMP_NAME'),
+    address: env.get('SMTP_EMAIL'),
+    name: env.get('SMTP_NAME'),
   },
   mailers: {
     smtp: transports.smtp({
