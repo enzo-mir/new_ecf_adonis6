@@ -22,9 +22,10 @@ async function allImages() {
   )) as z.infer<typeof imagesAddType>[][]
   return images[0]
 }
-const allHours: z.infer<typeof HourType>[][] = await Database.rawQuery(
-  'SELECT * FROM `hours` WHERE 1'
-)
+const allHours = async () => {
+  const allHour = await Database.rawQuery('SELECT * FROM `hours` WHERE 1')
+  return allHour[0]
+}
 const getUsersInformation = async () => {
   const allUsers = await Database.rawQuery('SELECT `id`,`name`,`email`,`role` FROM users ')
   return allUsers[0]

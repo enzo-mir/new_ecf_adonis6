@@ -1,29 +1,15 @@
 import type { HttpContext } from '@adonisjs/core/http'
-<<<<<<< HEAD
-import { allHours, allImages, getCardData, getUsersInformation } from '#functions/get_props_data'
-=======
-import {
-  allHours,
-  allImages,
-  getCardData,
-  getUsersInformation,
-} from '#services/get_props_data_service'
->>>>>>> origin/release
+import { allImages, getCardData, getUsersInformation } from '#services/get_props_data_service'
 import { HourType } from '#types/hours_type'
 import { z } from 'zod'
 import { cardUpdateType } from '#types/card_managment_type'
 import Database from '@adonisjs/lucid/services/db'
 import { userconfigCreateUser, usersConfigScheama } from '#types/user_type'
 import Hash from '@adonisjs/core/services/hash'
-<<<<<<< HEAD
-=======
-import hash from '@adonisjs/core/services/hash'
->>>>>>> origin/release
 export default class AdminController {
   async index(ctx: HttpContext) {
     if (ctx.auth.user?.role === 1) {
       return ctx.inertia.render('admin', {
-        hours: allHours[0],
         cardData: await getCardData(),
         images: await allImages(),
         usersInformation: await getUsersInformation(),
@@ -42,7 +28,7 @@ export default class AdminController {
           const rowUpdated = await Database.rawQuery(
             `UPDATE hours SET lunch = "${element.target}" WHERE day = "${element.day}"`
           )
-          if (rowUpdated[0].changedRows) {
+          if (rowUpdated[0].changedRows > 0) {
             const allHoursToSend = await Database.rawQuery('SELECT * FROM `hours`')
             return ctx.response.json({ hours: allHoursToSend[0] })
           } else {
@@ -52,7 +38,7 @@ export default class AdminController {
           const rowUpdated = await Database.rawQuery(
             `UPDATE hours SET dinner = "${element.target}" WHERE day = "${element.day}"`
           )
-          if (rowUpdated[0].changedRows) {
+          if (rowUpdated[0].changedRows > 0) {
             const allHoursToSend = await Database.rawQuery('SELECT * FROM `hours`')
             return ctx.response.json({ hours: allHoursToSend[0] })
           } else {
@@ -131,27 +117,16 @@ export default class AdminController {
         }
       } else {
         let updateUser
-<<<<<<< HEAD
-        if (usersInfo.emailChange) {
-          updateUser = await Database.rawQuery(
-            'UPDATE `users` SET name = ?, role = ?, password = ? WHERE id = ?',
-            [usersInfo.name, usersInfo.role, usersInfo.password, usersInfo.id]
-=======
-        const passwordHashed = await hash.make(usersInfo.password!)
+        const passwordHashed = await Hash.make(usersInfo.password!)
         if (usersInfo.emailChange) {
           updateUser = await Database.rawQuery(
             'UPDATE `users` SET name = ?, role = ?, password = ? WHERE id = ?',
             [usersInfo.name, usersInfo.role, passwordHashed, usersInfo.id]
->>>>>>> origin/release
           )
         } else {
           updateUser = await Database.rawQuery(
             'UPDATE `users` SET name = ?, email = ?, role = ?, password = ? WHERE id = ?',
-<<<<<<< HEAD
-            [usersInfo.name, usersInfo.email, usersInfo.role, usersInfo.password, usersInfo.id]
-=======
             [usersInfo.name, usersInfo.email, usersInfo.role, passwordHashed, usersInfo.id]
->>>>>>> origin/release
           )
         }
         if (updateUser[0].affectedRows > 0) {

@@ -6,13 +6,15 @@ import { useForm } from '@inertiajs/react'
 import { z } from 'zod'
 import styles from '../../css/logs.module.css'
 import overlayStyles from '../../css/overlay.module.css'
+import ForgetPassword from './log/forget_password'
+import fromforgetStyle from '../../css/password_forgot.module.css'
 
 const Log = ({
   displayPage,
   togglePage,
 }: {
   displayPage(val: boolean): void
-  togglePage: 'login' | 'signin'
+  togglePage: 'login' | 'signin' | 'password'
 }) => {
   const [page, setPage] = useState(togglePage)
   const [fromConfirmation, setFormConfirmation] = useState('')
@@ -98,7 +100,7 @@ const Log = ({
   return (
     <div className={overlayStyles.overlay} onClick={() => displayPage(false)}>
       <motion.section
-        className={styles.log_section}
+        className={page === 'password' ? fromforgetStyle.form_forgot : styles.log_section}
         onClick={(e) => e.stopPropagation()}
         initial={{ y: '-20%', opacity: 0 }}
         animate={{ y: '0', opacity: 1 }}
@@ -107,127 +109,140 @@ const Log = ({
       >
         <Cross onClick={() => displayPage(false)} />
 
-        <h1>{page === 'signin' ? 'Inscrivez-vous' : 'Connectez-vous'} </h1>
+        <h1>
+          {page === 'signin'
+            ? 'Inscrivez-vous'
+            : page === 'login'
+              ? 'Connectez-vous'
+              : 'Récupération de mot de passe'}{' '}
+        </h1>
         {fromConfirmation && <p className="validationMessage">{fromConfirmation}</p>}
-        <form
-          className={styles.form}
-          onSubmit={(e) => {
-            page === 'signin' ? submitSignin(e) : submitLogin(e)
-          }}
-        >
-          {page === 'signin' ? (
-            <div className={styles.signin}>
-              <div className="profil">
+        {page !== 'password' ? (
+          <form
+            className={styles.form}
+            onSubmit={(e) => {
+              page === 'signin' ? submitSignin(e) : submitLogin(e)
+            }}
+          >
+            {page === 'signin' ? (
+              <div className={styles.signin}>
+                <div className="profil">
+                  <input
+                    type="text"
+                    placeholder="Nom"
+                    autoComplete="family-name"
+                    required
+                    autoFocus
+                    onChange={(e) => {
+                      setData({ ...data, name: e.target.value })
+                    }}
+                  />
+                  <input
+                    type="email"
+                    required
+                    autoComplete="email"
+                    placeholder="Adresse e-mail"
+                    onChange={(e) => {
+                      setData({ ...data, email: e.target.value })
+                    }}
+                  />
+                </div>
+                <div className="password">
+                  <input
+                    type="password"
+                    placeholder="Mot de passe"
+                    autoComplete="new-password"
+                    required
+                    onChange={(e) => {
+                      setData({ ...data, password: e.target.value })
+                    }}
+                  />
+                  <input
+                    type="password"
+                    autoComplete="password"
+                    required
+                    placeholder="Confirmation mot de passe"
+                    onChange={(e) => {
+                      setData({ ...data, confirmPassword: e.target.value })
+                    }}
+                  />
+                </div>
+                <div className="adds">
+                  <input
+                    type="number"
+                    placeholder="Convives par défaut (1-9)"
+                    required
+                    onChange={(e) => {
+                      setData({ ...data, guests: Number.parseInt(e.target.value) })
+                    }}
+                  />
+                  <input
+                    type="text"
+                    defaultValue={''}
+                    onChange={(e) => {
+                      setData({
+                        ...data,
+                        alergy: e.target.value,
+                      })
+                    }}
+                    placeholder="Alergies (ex : tomates, carotte)"
+                  />
+                </div>
+              </div>
+            ) : page === 'login' ? (
+              <div className={styles.login}>
                 <input
                   type="text"
-                  placeholder="Nom"
-                  autoComplete="family-name"
+                  placeholder="Adresse e-mail"
+                  autoComplete="email"
                   required
                   autoFocus
-                  onChange={(e) => {
-                    setData({ ...data, name: e.target.value })
-                  }}
-                />
-                <input
-                  type="email"
-                  required
-                  autoComplete="email"
-                  placeholder="Adresse e-mail"
                   onChange={(e) => {
                     setData({ ...data, email: e.target.value })
                   }}
                 />
-              </div>
-              <div className="password">
                 <input
                   type="password"
                   placeholder="Mot de passe"
-                  autoComplete="new-password"
+                  autoComplete="password"
                   required
                   onChange={(e) => {
                     setData({ ...data, password: e.target.value })
                   }}
                 />
-                <input
-                  type="password"
-                  autoComplete="password"
-                  required
-                  placeholder="Confirmation mot de passe"
-                  onChange={(e) => {
-                    setData({ ...data, confirmPassword: e.target.value })
-                  }}
-                />
               </div>
-              <div className="adds">
-                <input
-                  type="number"
-                  placeholder="Convives par défaut (1-9)"
-                  required
-                  onChange={(e) => {
-                    setData({ ...data, guests: Number.parseInt(e.target.value) })
-                  }}
-                />
-                <input
-                  type="text"
-                  defaultValue={''}
-                  onChange={(e) => {
-                    setData({
-                      ...data,
-                      alergy: e.target.value,
-                    })
-                  }}
-                  placeholder="Alergies (ex : tomates, carotte)"
-                />
-              </div>
-            </div>
-          ) : page === 'login' ? (
-            <div className={styles.login}>
-              <input
-                type="text"
-                placeholder="Adresse e-mail"
-                autoComplete="email"
-                required
-                autoFocus
-                onChange={(e) => {
-                  setData({ ...data, email: e.target.value })
-                }}
-              />
-              <input
-                type="password"
-                placeholder="Mot de passe"
-                autoComplete="password"
-                required
-                onChange={(e) => {
-                  setData({ ...data, password: e.target.value })
-                }}
-              />
-            </div>
-          ) : null}
-          <div className={styles.ctaLog}>
-            <button type="submit" disabled={processing}>
-              {page === 'signin' ? 'Créer un compte' : 'Connection'}
-            </button>
-            <p
-              tabIndex={0}
-              onMouseDown={() => {
-                setPage(page === 'signin' ? 'login' : 'signin')
-                setFormConfirmation('')
-                reset()
-              }}
-              onKeyDown={(e) => {
-                if (e.code === 'Enter') {
+            ) : null}
+            <div className={styles.ctaLog}>
+              <button type="submit" disabled={processing}>
+                {page === 'signin' ? 'Créer un compte' : page === 'login' ? 'Connection' : null}
+              </button>
+              <p
+                tabIndex={0}
+                onMouseDown={() => {
                   setPage(page === 'signin' ? 'login' : 'signin')
                   setFormConfirmation('')
                   reset()
-                }
-              }}
-            >
-              {page === 'signin'
-                ? 'vous avez déjà un compte ? connectez-vous'
-                : "vous n'avez pas encore de compte ? créez un compte"}
-            </p>
-          </div>
-        </form>
+                }}
+                onKeyDown={(e) => {
+                  if (e.code === 'Enter') {
+                    setPage(page === 'signin' ? 'login' : 'signin')
+                    setFormConfirmation('')
+                    reset()
+                  }
+                }}
+              >
+                {page === 'signin'
+                  ? 'vous avez déjà un compte ? connectez-vous'
+                  : "vous n'avez pas encore de compte ? créez un compte"}
+              </p>
+              <p onClick={() => setPage('password')}>
+                {page === 'login' ? 'Mot de passe oublié ?' : null}
+              </p>
+            </div>
+          </form>
+        ) : (
+          <ForgetPassword email={data.email || ''} />
+        )}
       </motion.section>
     </div>
   )

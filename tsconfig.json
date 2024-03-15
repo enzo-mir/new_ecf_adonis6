@@ -1,18 +1,5 @@
 {
   "extends": "@adonisjs/tsconfig/tsconfig.app.json",
-<<<<<<< HEAD
-  "include": ["**/*"],
-  "compilerOptions": {
-    "lib": ["DOM"],
-    "rootDir": "./",
-    "outDir": "./build",
-    "jsx": "react-jsx",
-    "paths": {
-      "#controllers/*": ["./app/controllers/*.ts"],
-      "#types/*": ["./types/*.js"],
-      "#exceptions/*": ["./app/exceptions/*.js"],
-      "#models/*": ["./app/models/*.js"],
-=======
   "compilerOptions": {
     "rootDir": "./",
     "outDir": "./build",
@@ -21,7 +8,6 @@
       "#exceptions/*": ["./app/exceptions/*.js"],
       "#models/*": ["./app/models/*.js"],
       "#types/*": ["./types/*.js"],
->>>>>>> origin/release
       "#mails/*": ["./app/mails/*.js"],
       "#services/*": ["./app/services/*.js"],
       "#listeners/*": ["./app/listeners/*.js"],
@@ -34,15 +20,8 @@
       "#database/*": ["./database/*.js"],
       "#tests/*": ["./tests/*.js"],
       "#start/*": ["./start/*.js"],
-<<<<<<< HEAD
-      "#config/*": ["./config/*.js"],
-      "#functions/*": ["./app/functions/*.js"],
-    },
-  },
-=======
       "#config/*": ["./config/*.js"]
     }
   },
   "exclude": ["./inertia/**/*"]
->>>>>>> origin/release
 }

@@ -9,13 +9,8 @@ export default class AuthentificationsController {
   async login(ctx: HttpContext) {
     try {
       let userinfo = LoginUserScheama.parse(ctx.request.all())
-      const getDatabsePwd = await Database.rawQuery(
-        'SELECT `password` FROM `users` WHERE email = ?',
-        [userinfo.email]
-      )
-      await Hash.verify(getDatabsePwd[0][0].password, userinfo.password)
       const user = await User.verifyCredentials(userinfo.email, userinfo.password)
-      ctx.auth.use('web').login(user)
+      await ctx.auth.use('web').login(user)
       if (user.role === 1) {
         return ctx.response.redirect().toPath('/admin')
       }

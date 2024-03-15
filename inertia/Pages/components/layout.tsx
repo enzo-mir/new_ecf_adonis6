@@ -6,9 +6,8 @@ import { connectStore, userDataStore } from '../../data/store/connect.store.js'
 import { cardStore, hourStore, imageStore } from '../../data/store/api_data.store.js'
 import type { CardDataType, HourDataType, Image } from '../../types/data_api_types.js'
 import type { User } from '../../types/user_type.store.js'
-import React from 'react'
 
-const Layout = ({ children }) => {
+const Layout = ({ children }: { children: JSX.Element | HTMLElement }) => {
   type PropsType = {
     props: {
       hours: Array<HourDataType>
@@ -29,8 +28,6 @@ const Layout = ({ children }) => {
   const setImages = imageStore((state) => state.setImages)
 
   useEffect(() => {
-    console.log(props)
-
     setHours(props.hours)
     props.cardData && setCardData(props.cardData)
     props.images && setImages(props.images)

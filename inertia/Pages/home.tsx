@@ -8,7 +8,7 @@ import type { Image } from '../types/data_api_types.js'
 import styles from '../css/home.module.css'
 import overlayStyles from '../css/overlay.module.css'
 
-const Home = ({ userData, hours, images, token }) => {
+const Home = ({ images }: { images: Image[] }) => {
   const [res, setRes] = useState(false)
 
   const containerVariant = {

@@ -13,12 +13,8 @@ export default class ProfilesController {
         const updateQuery = await Database.rawQuery(
           `UPDATE users SET name = "${userUpdateData.name}",email = "${userUpdateData.email}",guests = ${userUpdateData.guests},alergy = "${userUpdateData.alergy}" WHERE email = "${ctx.auth.user?.email}"`
         )
-<<<<<<< HEAD
-        if (updateQuery[0].changedRows > 0) {
-=======
 
         if (updateQuery[0].affectedRows > 0) {
->>>>>>> origin/release
           return ctx.response.redirect().back()
         } else {
           throw new Error('Echec lors de la mise à jour des données')
@@ -30,22 +26,13 @@ export default class ProfilesController {
           `UPDATE users SET name = "${userUpdateData.name}",email = "${userUpdateData.email}",guests = ${userUpdateData.guests},alergy = "${userUpdateData.alergy}",password="${hashedPassword}" WHERE email = "${ctx.auth.user?.email}"`
         )
 
-<<<<<<< HEAD
-        if (updateQuery[0].changedRows > 0) {
-=======
         if (updateQuery[0].affectedRows > 0) {
->>>>>>> origin/release
           return ctx.response.redirect().back()
         } else {
           throw new Error('Echec lors de la mise à jour des données')
         }
       }
     } catch (error) {
-<<<<<<< HEAD
-      ctx.session.flash({
-        errors: error instanceof z.ZodError ? JSON.parse(error.message)[0]?.message : error.message,
-      })
-=======
       if (error.code === 'ER_DUP_ENTRY') {
         ctx.session.flash({
           errors: "L'email est déjà pris",
@@ -56,7 +43,6 @@ export default class ProfilesController {
             error instanceof z.ZodError ? JSON.parse(error.message)[0]?.message : error.message,
         })
       }
->>>>>>> origin/release
       return ctx.response.redirect().back()
     }
   }

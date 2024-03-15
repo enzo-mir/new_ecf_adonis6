@@ -16,15 +16,9 @@ const shieldConfig = defineConfig({
    * to learn more
    */
   csrf: {
-<<<<<<< HEAD
-    enabled: false,
-    exceptRoutes: [],
-    enableXsrfCookie: false,
-=======
     enabled: true,
-    exceptRoutes: [],
+    exceptRoutes: ['/admin/hoursEdition'],
     enableXsrfCookie: true,
->>>>>>> origin/release
     methods: ['POST', 'PUT', 'PATCH', 'DELETE'],
   },
 

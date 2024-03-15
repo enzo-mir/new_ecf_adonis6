@@ -23,7 +23,7 @@ const Header = () => {
     state.setConnectedAdmin,
   ])
   const { post } = useForm()
-  const [userData, setuserData] = userDataStore((state) => [state.userData, state.setUserData])
+  const userData = userDataStore((state) => state.userData)
   useEffect(() => {
     window.scrollTo(0, 0)
     setDisplayHeader(false)
