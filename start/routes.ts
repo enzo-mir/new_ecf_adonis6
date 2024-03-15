@@ -14,6 +14,7 @@ const ReservationsController = () => import('#controllers/reservations_controlle
 import { HttpContext } from '@adonisjs/core/http'
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+const ForgotPasswordsController = () => import('#controllers/forgot_passwords_controller')
 const PropsPagesController = () => import('#controllers/props_pages_controller')
 
 router.get('/', [PropsPagesController, 'home'])
@@ -31,6 +32,8 @@ router
     router.post('/update', [ProfilesController, 'update']).use(middleware.auth())
     router.post('/logout', [ProfilesController, 'logout'])
     router.post('/delete', [ProfilesController, 'delete'])
+    router.post('/forgot_pasword/:email', [ForgotPasswordsController, 'forgot_post'])
+    router.post('/new_password', [ForgotPasswordsController, 'new_password'])
   })
   .prefix('profile')
 
@@ -60,7 +63,7 @@ router
     router.post('/update', [ImagesController, 'update'])
   })
   .prefix('/image')
-
+router.get('/forgot_password/:email', [ForgotPasswordsController, 'index'])
 router.any('/*', async (ctx: HttpContext) => {
   return ctx.inertia.render('undefined_page')
 })
