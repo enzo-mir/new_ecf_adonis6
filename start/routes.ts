@@ -6,51 +6,61 @@
 | The Routers file is used for defining the HTTP Routers.
 |
 */
-import AdminController from '#controllers/admin_controller'
-import AuthentificationsController from '#controllers/authentifications_controller'
-import ImagesController from '#controllers/images_controller'
-import ProfilesController from '#controllers/profiles_controller'
-import ReservationsController from '#controllers/reservations_controller'
+const AdminController = () => import('#controllers/admin_controller')
+const AuthentificationsController = () => import('#controllers/authentifications_controller')
+const ImagesController = () => import('#controllers/images_controller')
+const ProfilesController = () => import('#controllers/profiles_controller')
+const ReservationsController = () => import('#controllers/reservations_controller')
 import { HttpContext } from '@adonisjs/core/http'
-import Router from '@adonisjs/core/services/Router'
+import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
-import PropsPagesController from '#controllers/props_pages_controller'
+const PropsPagesController = () => import('#controllers/props_pages_controller')
 
-Router.get('/', [PropsPagesController, 'home'])
-Router.get('carte', [PropsPagesController, 'card'])
+router.get('/', [PropsPagesController, 'home'])
+router.get('carte', [PropsPagesController, 'card'])
 
-Router.group(() => {
-  Router.post('/add', [ReservationsController, 'add'])
-  Router.post('/delete', [ReservationsController, 'delete'])
-}).prefix('/reservation')
+router
+  .group(() => {
+    router.post('/add', [ReservationsController, 'add'])
+    router.post('/delete', [ReservationsController, 'delete'])
+  })
+  .prefix('/reservation')
 
-Router.group(() => {
-  Router.post('/update', [ProfilesController, 'update']).use(middleware.auth())
-  Router.post('/logout', [ProfilesController, 'logout'])
-  Router.post('/delete', [ProfilesController, 'delete'])
-}).prefix('profile')
+router
+  .group(() => {
+    router.post('/update', [ProfilesController, 'update']).use(middleware.auth())
+    router.post('/logout', [ProfilesController, 'logout'])
+    router.post('/delete', [ProfilesController, 'delete'])
+  })
+  .prefix('profile')
 
-Router.group(() => {
-  Router.post('/login', [AuthentificationsController, 'login'])
-  Router.post('/register', [AuthentificationsController, 'register'])
-}).prefix('auth')
+router
+  .group(() => {
+    router.post('/login', [AuthentificationsController, 'login'])
+    router.post('/register', [AuthentificationsController, 'register'])
+  })
+  .prefix('auth')
 
-Router.group(() => {
-  Router.get('', [AdminController, 'index']).use(middleware.auth())
-  Router.post('/hoursEdition', [AdminController, 'hours'])
-  Router.post('/userUpdate', [AdminController, 'userUpdate'])
-  Router.post('/deletUser/:id', [AdminController, 'deleteUser'])
-  Router.post('/createUser', [AdminController, 'createUser'])
-}).prefix('/admin')
+router
+  .group(() => {
+    router.get('', [AdminController, 'index']).use(middleware.auth())
+    router.post('/hoursEdition', [AdminController, 'hours'])
+    router.post('/userUpdate', [AdminController, 'userUpdate'])
+    router.post('/deletUser/:id', [AdminController, 'deleteUser'])
+    router.post('/createUser', [AdminController, 'createUser'])
+  })
+  .prefix('/admin')
 
-Router.post('/card/update', [AdminController, 'cardUpdate'])
+router.post('/card/update', [AdminController, 'cardUpdate'])
 
-Router.group(() => {
-  Router.post('/upload', [ImagesController, 'upload'])
-  Router.post('/delete', [ImagesController, 'delete'])
-  Router.post('/update', [ImagesController, 'update'])
-}).prefix('/image')
+router
+  .group(() => {
+    router.post('/upload', [ImagesController, 'upload'])
+    router.post('/delete', [ImagesController, 'delete'])
+    router.post('/update', [ImagesController, 'update'])
+  })
+  .prefix('/image')
 
-Router.any('/*', async (ctx: HttpContext) => {
+router.any('/*', async (ctx: HttpContext) => {
   return ctx.inertia.render('undefined_page')
 })
