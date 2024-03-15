@@ -47,7 +47,7 @@ router
 
 router
   .group(() => {
-    router.get('', [AdminController, 'index']).use(middleware.auth())
+    router.get('', [PropsPagesController, 'admin']).use(middleware.auth())
     router.post('/hoursEdition', [AdminController, 'hours'])
     router.post('/userUpdate', [AdminController, 'userUpdate'])
     router.post('/deletUser/:id', [AdminController, 'deleteUser'])

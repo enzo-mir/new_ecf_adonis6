@@ -1,4 +1,4 @@
-import { allHours } from '#services/get_props_data_service'
+import { allHours, allImages } from '#services/get_props_data_service'
 import { sendUserData } from '#services/get_user_data'
 import { defineConfig } from '@adonisjs/inertia'
 
@@ -15,6 +15,7 @@ export default defineConfig({
     errors: (ctx) => ctx.session?.flashMessages.get('errors'),
     user: async (ctx) => await sendUserData(ctx),
     hours: async () => await allHours(),
+    images: async () => await allImages(),
   },
 
   /**

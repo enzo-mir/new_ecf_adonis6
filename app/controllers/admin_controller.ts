@@ -1,5 +1,4 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { allImages, getCardData, getUsersInformation } from '#services/get_props_data_service'
 import { HourType } from '#types/hours_type'
 import { z } from 'zod'
 import { cardUpdateType } from '#types/card_managment_type'
@@ -7,18 +6,6 @@ import Database from '@adonisjs/lucid/services/db'
 import { userconfigCreateUser, usersConfigScheama } from '#types/user_type'
 import Hash from '@adonisjs/core/services/hash'
 export default class AdminController {
-  async index(ctx: HttpContext) {
-    if (ctx.auth.user?.role === 1) {
-      return ctx.inertia.render('admin', {
-        cardData: await getCardData(),
-        images: await allImages(),
-        usersInformation: await getUsersInformation(),
-      })
-    } else {
-      return ctx.inertia.render('undefined_page')
-    }
-  }
-
   async hours(ctx: HttpContext) {
     try {
       const hoursData = HourType.parse(ctx.request.all())

@@ -30,7 +30,8 @@
   min-height: 20px;
   background-color: transparent;
   aspect-ratio: 1/1;
-  background-image: url('../js/assets/images/barre-de-menu.png');
+  background-image: url('../assets/images/barre-de-menu.png');
+  background-repeat: no-repeat;
   background-size: contain;
   margin-inline: 1em;
   right: 0px;
