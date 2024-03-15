@@ -21,4 +21,8 @@ const dbConfig = defineConfig({
   },
 })
 
+<<<<<<< HEAD
 export default dbConfig
+=======
+export default dbConfig
+>>>>>>> origin/release

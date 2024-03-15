@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+import { sendUserData } from '#functions/get_user_data'
+import { defineConfig } from '@adonisjs/inertia'
+
+export default defineConfig({
+  rootView: 'home',
+  sharedData: {
+    errors: (ctx) => ctx.session.flashMessages.get('errors'),
+    user: async (ctx) => await sendUserData(ctx),
+  },
+=======
 import { sendUserData } from '#services/get_user_data'
 import { defineConfig } from '@adonisjs/inertia'
 
@@ -22,4 +33,5 @@ export default defineConfig({
     enabled: false,
     entrypoint: 'inertia/app/ssr.tsx',
   },
+>>>>>>> origin/release
 })

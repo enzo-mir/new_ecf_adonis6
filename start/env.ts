@@ -34,6 +34,7 @@ export default await Env.create(new URL('../', import.meta.url), {
   DB_PORT: Env.schema.number(),
   DB_USER: Env.schema.string(),
   DB_PASSWORD: Env.schema.string.optional(),
+<<<<<<< HEAD
   DB_DATABASE: Env.schema.string(),
 
   /*
@@ -55,4 +56,11 @@ export default await Env.create(new URL('../', import.meta.url), {
 
   SECRET_ENCRYPT: Env.schema.string(),
   DOMAIN: Env.schema.string(),
+=======
+<<<<<<< HEAD
+  DB_DATABASE: Env.schema.string(),
+=======
+  DB_DATABASE: Env.schema.string()
+>>>>>>> origin/release
+>>>>>>> 97234da35e74503be710bd143ef312b0348765fd
 })

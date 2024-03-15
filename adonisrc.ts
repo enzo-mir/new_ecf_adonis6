@@ -10,7 +10,19 @@ export default defineConfig({
   | will be scanned automatically from the "./commands" directory.
   |
   */
+<<<<<<< HEAD
   commands: [() => import('@adonisjs/core/commands'), () => import('@adonisjs/lucid/commands'), () => import('@adonisjs/mail/commands')],
+=======
+<<<<<<< HEAD
+  commands: [
+    () => import('@adonisjs/core/commands'),
+    () => import('@adonisjs/lucid/commands'),
+    () => import('@adonisjs/bouncer/commands'),
+  ],
+=======
+  commands: [() => import('@adonisjs/core/commands'), () => import('@adonisjs/lucid/commands')],
+>>>>>>> origin/release
+>>>>>>> 97234da35e74503be710bd143ef312b0348765fd
 
   /*
   |--------------------------------------------------------------------------
@@ -34,11 +46,22 @@ export default defineConfig({
     () => import('@adonisjs/vite/vite_provider'),
     () => import('@adonisjs/shield/shield_provider'),
     () => import('@adonisjs/static/static_provider'),
-    () => import('@adonisjs/cors/cors_provider'),
+<<<<<<< HEAD
     () => import('@adonisjs/lucid/database_provider'),
     () => import('@adonisjs/auth/auth_provider'),
     () => import('@adonisjs/inertia/inertia_provider'),
+    () => import('@adonisjs/bouncer/bouncer_provider'),
+=======
+    () => import('@adonisjs/cors/cors_provider'),
+    () => import('@adonisjs/lucid/database_provider'),
+    () => import('@adonisjs/auth/auth_provider'),
+<<<<<<< HEAD
+    () => import('@adonisjs/inertia/inertia_provider'),
     () => import('@adonisjs/mail/mail_provider')
+=======
+    () => import('@adonisjs/inertia/inertia_provider')
+>>>>>>> origin/release
+>>>>>>> 97234da35e74503be710bd143ef312b0348765fd
   ],
 
   /*
@@ -75,6 +98,8 @@ export default defineConfig({
     ],
     forceExit: false,
   },
+<<<<<<< HEAD
+=======
 
   /*
   |--------------------------------------------------------------------------
@@ -85,6 +110,7 @@ export default defineConfig({
   | the production build.
   |
   */
+>>>>>>> origin/release
   metaFiles: [
     {
       pattern: 'resources/views/**/*.edge',
@@ -95,9 +121,12 @@ export default defineConfig({
       reloadServer: false,
     },
   ],
+<<<<<<< HEAD
+=======
 
   assetsBundler: false,
   unstable_assembler: {
     onBuildStarting: [() => import('@adonisjs/vite/build_hook')],
   },
+>>>>>>> origin/release
 })

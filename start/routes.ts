@@ -6,19 +6,41 @@
 | The Routers file is used for defining the HTTP Routers.
 |
 */
+<<<<<<< HEAD
 const AdminController = () => import('#controllers/admin_controller')
 const AuthentificationsController = () => import('#controllers/authentifications_controller')
 const ImagesController = () => import('#controllers/images_controller')
 const ProfilesController = () => import('#controllers/profiles_controller')
 const ReservationsController = () => import('#controllers/reservations_controller')
+=======
+import AdminController from '#controllers/admin_controller'
+import AuthentificationsController from '#controllers/authentifications_controller'
+import ImagesController from '#controllers/images_controller'
+import ProfilesController from '#controllers/profiles_controller'
+<<<<<<< HEAD
+import PropsPagesController from '#controllers/props_pages_controller'
+=======
+>>>>>>> origin/release
+import ReservationsController from '#controllers/reservations_controller'
+>>>>>>> 97234da35e74503be710bd143ef312b0348765fd
 import { HttpContext } from '@adonisjs/core/http'
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+<<<<<<< HEAD
 const ForgotPasswordsController = () => import('#controllers/forgot_passwords_controller')
 const PropsPagesController = () => import('#controllers/props_pages_controller')
 
 router.get('/', [PropsPagesController, 'home'])
 router.get('carte', [PropsPagesController, 'card'])
+=======
+<<<<<<< HEAD
+=======
+import PropsPagesController from '#controllers/props_pages_controller'
+
+>>>>>>> origin/release
+Router.get('/', [PropsPagesController, 'home'])
+Router.get('carte', [PropsPagesController, 'card'])
+>>>>>>> 97234da35e74503be710bd143ef312b0348765fd
 
 router
   .group(() => {

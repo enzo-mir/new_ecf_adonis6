@@ -21,7 +21,10 @@ export const imagesUpdateType = imagesAddType
     image: true,
   })
   .extend({
+<<<<<<< HEAD
+=======
     id: z.string().transform((v) => Number.parseInt(v)),
+>>>>>>> origin/release
     image: z
       .any()
       .refine((files) => files?.size <= 500000, {
