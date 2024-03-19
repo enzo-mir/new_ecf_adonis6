@@ -1,7 +1,7 @@
 import React from 'react'
-import { imageStore } from '../../../data/store/api_data.store.js'
 import styles from '../../../css/admin.module.css'
-import { useForm } from '@inertiajs/react'
+import { useForm, usePage } from '@inertiajs/react'
+import { PropsType } from '../layout/layout.js'
 const AdminImages = ({
   setDisplayModal,
   setImageData,
@@ -15,7 +15,8 @@ const AdminImages = ({
     adding: boolean
   }) => void
 }) => {
-  const [setImages, image] = imageStore((state) => [state.setImages, state.images])
+  const { props } = usePage() as unknown as PropsType
+  const images = props.images
   const { post, setData, data } = useForm<{ url: string }>({ url: '' })
   function imageAdd() {
     setImageData({
@@ -46,26 +47,26 @@ const AdminImages = ({
     <>
       <h1>Galerie d&#39;images</h1>
       <div className={styles.images_galery}>
-        {image?.map((images, id) => {
+        {images?.map((image, id) => {
           return (
             <div key={id}>
-              <img src={images.url} alt="plats du chef" />
+              <img src={image.url} alt="plats du chef" />
               <p>
-                Titre : {images.title}
+                Titre : {image.title}
                 <br />
                 <br />
-                Description : {images.description}
+                Description : {image.description}
               </p>
               <aside>
                 <button
                   onClick={(e: React.MouseEvent) =>
-                    imageEdit(e, images.title, images.description, images.id)
+                    imageEdit(e, image.title, image.description, image.id)
                   }
                 >
                   Éditer
                 </button>
 
-                {data.url === images.url ? (
+                {data.url === image.url ? (
                   <div>
                     <p>êtes vous sûr ?</p>
                     <div>
@@ -76,7 +77,7 @@ const AdminImages = ({
                 ) : (
                   <button
                     onClick={() => {
-                      setData({ url: images.url })
+                      setData({ url: image.url })
                     }}
                   >
                     Supprimer

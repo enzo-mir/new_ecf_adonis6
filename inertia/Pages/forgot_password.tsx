@@ -1,4 +1,4 @@
-import Layout from './components/layout'
+import Layout from './components/layout/layout'
 import styles from '../css/password_forgot.module.css'
 import { useForm } from '@inertiajs/react'
 import { ChangeEvent, FormEvent, useState } from 'react'

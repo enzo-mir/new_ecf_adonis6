@@ -20,10 +20,10 @@ const AdminEditImages = ({
   displaying(val: boolean): void
 }) => {
   const [validationMessage, setValidationMessage] = useState<string>('')
-  const urlRef = useRef('')
+  const [urlMaker, setUrlMaker] = useState<string>(imageEditionData.url)
   const { post, data, setData, reset, processing } = useForm({
     id: imageEditionData.id,
-    image: null,
+    image: imageEditionData.url || null,
     title: imageEditionData.title,
     description: imageEditionData.description,
     old_url: imageEditionData.url,
@@ -41,7 +41,7 @@ const AdminEditImages = ({
     const file = event.target.files![0]
     setData({ ...data, image: file })
     const urlChanging = URL.createObjectURL(file)
-    urlRef.current = urlChanging
+    setUrlMaker(urlChanging)
     if (file.size > 500000) {
       setValidationMessage('Limite de taille : 500 Ko')
     }
@@ -53,7 +53,6 @@ const AdminEditImages = ({
       setValidationMessage('Une image doit être séléctionnée')
     } else {
       if (imageEditionData.adding) {
-        delete data.old_url
         post('/image/upload', {
           data,
           forceFormData: true,
@@ -65,8 +64,6 @@ const AdminEditImages = ({
           },
         })
       } else {
-        console.log(data)
-
         post('/image/update', {
           data,
           forceFormData: true,
@@ -98,7 +95,7 @@ const AdminEditImages = ({
             <div
               className={styles.addImageCase}
               style={{
-                background: urlRef.current ? 'url(' + urlRef.current + ')' : 'black',
+                background: urlMaker ? 'url(' + urlMaker + ')' : 'black',
               }}
             >
               <svg
@@ -136,7 +133,7 @@ const AdminEditImages = ({
               <div
                 className={styles.addImageCase}
                 style={{
-                  background: urlRef.current ? 'url(' + urlRef.current + ')' : 'black',
+                  background: 'url(' + urlMaker + ')',
                 }}
               >
                 <svg

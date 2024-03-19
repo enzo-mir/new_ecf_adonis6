@@ -1,13 +1,14 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import icon from '../../../assets/images/icon.svg'
-import { connectStore, userDataStore } from '../../../data/store/connect.store.js'
+import { connectStore } from '../../../data/store/connect.store.js'
 import { AnimatePresence } from 'framer-motion'
-import { Link, useForm } from '@inertiajs/react'
+import { Link, useForm, usePage } from '@inertiajs/react'
 import overlayStyles from '../../../css/overlay.module.css'
 const Reserv = React.lazy(() => import('../reservations/reservation.js'))
 const PopReservation = React.lazy(() => import('../reservations/pop_reservation.js'))
 const ProfilComponent = React.lazy(() => import('../client/profil_component.js'))
 import styles from '../../../css/header.module.css'
+import { PropsType } from './layout'
 const Log = React.lazy(() => import('../log/log.js'))
 
 const Header = () => {
@@ -22,8 +23,11 @@ const Header = () => {
     state.connectedAdmin,
     state.setConnectedAdmin,
   ])
+
+  const { props } = usePage() as unknown as PropsType
+
   const { post } = useForm()
-  const userData = userDataStore((state) => state.userData)
+  const userData = props.user
   useEffect(() => {
     window.scrollTo(0, 0)
     setDisplayHeader(false)
@@ -93,9 +97,11 @@ const Header = () => {
             </button>
           ) : (
             <>
-              <button className="reservations" onClick={() => setDisplayModalReservation(true)}>
-                {userData.currentReservation?.length}
-              </button>
+              {userData ? (
+                <button className="reservations" onClick={() => setDisplayModalReservation(true)}>
+                  {userData.currentReservation?.length}
+                </button>
+              ) : null}
               <button className={styles.profil_btn} onClick={() => setProfilPage(true)}>
                 {userData ? userData.name.charAt(0) : null}
               </button>

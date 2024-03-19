@@ -1,5 +1,4 @@
 import { imagesAddType } from '#types/image_edit_type'
-import { HourType } from '#types/hours_type'
 import Database from '@adonisjs/lucid/services/db'
 import { z } from 'zod'
 

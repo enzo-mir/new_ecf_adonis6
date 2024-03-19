@@ -1,14 +1,15 @@
 import styled from 'styled-components'
 import { useEffect, useState } from 'react'
-import { userDataStore } from '../../../data/store/connect.store'
 import { motion } from 'framer-motion'
 import React from 'react'
-import { useForm } from '@inertiajs/react'
+import { useForm, usePage } from '@inertiajs/react'
 import overlaystyles from '../../../css/overlay.module.css'
+import { PropsType } from '../layout/layout'
 
 const PopReservation = ({ setDisplay }: { setDisplay(val: boolean): void }) => {
   const [errorMessage, setErrorMessage] = useState('')
-  const userData = userDataStore((state) => state.userData)
+  const { props } = usePage() as unknown as PropsType
+  const userData = props.user!
   useEffect(() => {
     document.body.style.overflow = 'hidden'
     return () => {

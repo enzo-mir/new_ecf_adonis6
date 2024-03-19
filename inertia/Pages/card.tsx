@@ -1,28 +1,18 @@
 import { useState } from 'react'
 import React from 'react'
-const Reserv = React.lazy(() => import('./components/reservation.js'))
+const Reserv = React.lazy(() => import('./components/reservations/reservation.js'))
 import styles from '../css/card.module.css'
 import type {
   CardDataType,
-  HourDataType,
   DessertType,
   EntreeType,
   MenuType,
   PlatType,
 } from '../types/data_api_types.js'
-const Layout = React.lazy(() => import('./components/layout.js'))
-import type { User } from '../types/user_type.store.js'
+const Layout = React.lazy(() => import('./components/layout/layout.js'))
 import { Head } from '@inertiajs/react'
 
-const Card = ({
-  cardData,
-  hours,
-  userData,
-}: {
-  cardData: CardDataType
-  hours: Array<HourDataType>
-  userData: User
-}) => {
+const Card = ({ cardData }: { cardData: CardDataType }) => {
   const [res, setRes] = useState(false)
   const { starters, dishs, desserts, menus } = cardData
 

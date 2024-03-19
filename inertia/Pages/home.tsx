@@ -1,7 +1,7 @@
 import { Suspense, useState } from 'react'
 import React from 'react'
-const Reserv = React.lazy(() => import('./components/reservation.js'))
-const Layout = React.lazy(() => import('./components/layout.js'))
+const Reserv = React.lazy(() => import('./components/reservations/reservation.js'))
+const Layout = React.lazy(() => import('./components/layout/layout.js'))
 import { AnimatePresence, motion } from 'framer-motion'
 import { Head } from '@inertiajs/react'
 import type { Image } from '../types/data_api_types.js'

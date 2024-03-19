@@ -1,25 +1,23 @@
 import { type ChangeEvent, useEffect, useState } from 'react'
 import { Cross } from '../../../assets/style/cross'
 import { useRef } from 'react'
-import { connectStore, userDataStore } from '../../../data/store/connect.store'
-import { hourStore } from '../../../data/store/api_data.store'
 import { motion } from 'framer-motion'
 import React from 'react'
-import { useForm } from '@inertiajs/react'
+import { useForm, usePage } from '@inertiajs/react'
 import { reservationScheama } from '../../../types/reservation_data.scheama'
-import type { User } from '../../../types/user_type.store'
 import styles from '../../../css/reservation.module.css'
 import overlayStyles from '../../../css/overlay.module.css'
+import { PropsType } from '../layout/layout'
 
 export default function Reserv({ res: displayReservation }: { res(val: boolean): void }) {
-  const userData = userDataStore((state) => state.userData as User)
-  const connected = connectStore((state) => state.connectedUser)
-  const hours = hourStore((state) => state.hours)
+  const { props } = usePage() as unknown as PropsType
+  const userData = props.user
+  const hours = props.hours
   const { data, setData, processing, post } = useForm({
-    name: connected ? userData?.name : '',
-    email: connected ? userData?.email : '',
-    guests: connected ? userData?.guests : 1,
-    alergy: connected ? userData?.alergy : '',
+    name: userData?.name || '',
+    email: userData?.email || '',
+    guests: userData?.guests || 1,
+    alergy: userData?.alergy || '',
     date: new Date().toLocaleDateString('fr-CA'),
     hourTargeted: null || '',
     timeTargeted: null || '',
@@ -165,7 +163,9 @@ export default function Reserv({ res: displayReservation }: { res(val: boolean):
         },
         onSuccess: () => {
           setResError('Table réservée !')
-          displayReservation(false)
+          setTimeout(() => {
+            displayReservation(false)
+          }, 1500)
         },
       })
     } catch (error) {

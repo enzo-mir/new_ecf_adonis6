@@ -1,14 +1,16 @@
 import { type FormEvent, useEffect, useState } from 'react'
-import { connectStore, userDataStore } from '../../../data/store/connect.store.js'
+import { connectStore } from '../../../data/store/connect.store.js'
 import { Cross } from '../../../assets/style/cross.js'
 import { motion } from 'framer-motion'
 import { updateZodType } from '../../../types/user_managment_type.js'
 import { z } from 'zod'
-import { useForm } from '@inertiajs/react'
+import { useForm, usePage } from '@inertiajs/react'
 import styles from '../../../css/profil.module.css'
 import overlayStyles from '../../../css/overlay.module.css'
+import { PropsType } from '../layout/layout.js'
 const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean): void }) => {
-  const userData = userDataStore((state) => state.userData)
+  const { props } = usePage() as unknown as PropsType
+  const userData = props.user!
   const setConnectedUser = connectStore((state) => state.setConnectedUser)
   const [validationMessage, setValidationMessage] = useState<string>('')
   const [editable, setEditable] = useState<boolean>(false)
@@ -20,13 +22,15 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
       setEditable(false)
     }
   }, [])
-  const { post, data, setData, reset, processing } = useForm({
-    name: userData.name,
-    email: userData.email,
-    guests: userData.guests,
-    password: '',
-    alergy: userData.alergy,
-  })
+  const { post, data, setData, reset, processing } = useForm(
+    userData && {
+      name: userData.name,
+      email: userData.email,
+      guests: userData.guests,
+      password: '',
+      alergy: userData.alergy,
+    }
+  )
 
   function validationForm(e: FormEvent) {
     e.preventDefault()
@@ -57,9 +61,9 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
       post('/profile/logout', {
         onSuccess: () => {
           setValidationMessage('Déconnection ...')
+          setConnectedUser(false)
           setTimeout(() => {
             setDisplayProfil(false)
-            setConnectedUser(false)
             reset()
           }, 1000)
         },
@@ -106,102 +110,106 @@ const ProfilComponent = ({ setDisplayProfil }: { setDisplayProfil(vale: boolean)
   }
 
   return (
-    <div className={overlayStyles.overlay} onClick={() => setDisplayProfil(false)}>
-      <motion.section
-        className={styles.profil_section}
-        onClick={(e) => e.stopPropagation()}
-        initial={{ y: '-20%', opacity: 0 }}
-        animate={{ y: '0', opacity: 1 }}
-        exit={{ y: '-20%', opacity: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Cross onClick={() => setDisplayProfil(false)} />
-        {validationMessage ? <p className={styles.validationMessage}>{validationMessage}</p> : null}
-        {editable ? (
-          <form onSubmit={validationForm}>
-            <div className="profilAcount">
-              <label htmlFor="name">
-                nom :
-                <input
-                  type="text"
-                  name="name"
-                  value={data.name}
-                  onChange={(e) => setData({ ...data, name: e.target.value })}
-                />
-              </label>
-              <label htmlFor="email">
-                e-mail :
-                <input
-                  type="email"
-                  name="email"
-                  value={data.email}
-                  onChange={(e) => setData({ ...data, email: e.target.value })}
-                />
-              </label>
+    userData && (
+      <div className={overlayStyles.overlay} onClick={() => setDisplayProfil(false)}>
+        <motion.section
+          className={styles.profil_section}
+          onClick={(e) => e.stopPropagation()}
+          initial={{ y: '-20%', opacity: 0 }}
+          animate={{ y: '0', opacity: 1 }}
+          exit={{ y: '-20%', opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Cross onClick={() => setDisplayProfil(false)} />
+          {validationMessage ? (
+            <p className={styles.validationMessage}>{validationMessage}</p>
+          ) : null}
+          {editable ? (
+            <form onSubmit={validationForm}>
+              <div className="profilAcount">
+                <label htmlFor="name">
+                  nom :
+                  <input
+                    type="text"
+                    name="name"
+                    value={data.name}
+                    onChange={(e) => setData({ ...data, name: e.target.value })}
+                  />
+                </label>
+                <label htmlFor="email">
+                  e-mail :
+                  <input
+                    type="email"
+                    name="email"
+                    value={data.email}
+                    onChange={(e) => setData({ ...data, email: e.target.value })}
+                  />
+                </label>
+              </div>
+              <div className="addsOn">
+                <label htmlFor="guests">
+                  Convives (par défaut) :
+                  <input
+                    type="number"
+                    min={1}
+                    name="guests"
+                    value={data.guests!}
+                    onChange={(e) =>
+                      setData({
+                        ...data,
+                        guests: Number.parseInt(e.target.value),
+                      })
+                    }
+                  />
+                </label>
+                <label htmlFor="alergy">
+                  Alergies :
+                  <input
+                    type="text"
+                    name="alergy"
+                    value={data.alergy}
+                    onChange={(e) => setData({ ...data, alergy: e.target.value })}
+                  />
+                </label>
+              </div>
+              <div className={styles.passwordField}>
+                <label htmlFor="name">
+                  Mot de passe :
+                  <input
+                    type="text"
+                    autoComplete="new-password"
+                    name="name"
+                    value={data.password || ''}
+                    onChange={(e) => setData({ ...data, password: e.target.value })}
+                  />
+                </label>
+              </div>
+              <EditableCta />
+            </form>
+          ) : (
+            <div>
+              <div className="profilAcount">
+                <p>
+                  nom : <strong>{data.name}</strong>
+                </p>
+                <p>
+                  e-mail : <strong>{data.email}</strong>
+                </p>
+              </div>
+              <div className="addsOn">
+                <p>
+                  convives (par défaut) : <strong>{data.guests!}</strong>
+                </p>
+                <p>
+                  alergies : <strong>{data.alergy || 'aucune'}</strong>
+                </p>
+              </div>
+              <EditableCta />
             </div>
-            <div className="addsOn">
-              <label htmlFor="guests">
-                Convives (par défaut) :
-                <input
-                  type="number"
-                  min={1}
-                  name="guests"
-                  value={data.guests!}
-                  onChange={(e) =>
-                    setData({
-                      ...data,
-                      guests: Number.parseInt(e.target.value),
-                    })
-                  }
-                />
-              </label>
-              <label htmlFor="alergy">
-                Alergies :
-                <input
-                  type="text"
-                  name="alergy"
-                  value={data.alergy}
-                  onChange={(e) => setData({ ...data, alergy: e.target.value })}
-                />
-              </label>
-            </div>
-            <div className={styles.passwordField}>
-              <label htmlFor="name">
-                Mot de passe :
-                <input
-                  type="text"
-                  autoComplete="new-password"
-                  name="name"
-                  value={data.password || ''}
-                  onChange={(e) => setData({ ...data, password: e.target.value })}
-                />
-              </label>
-            </div>
-            <EditableCta />
-          </form>
-        ) : (
-          <div>
-            <div className="profilAcount">
-              <p>
-                nom : <strong>{data.name}</strong>
-              </p>
-              <p>
-                e-mail : <strong>{data.email}</strong>
-              </p>
-            </div>
-            <div className="addsOn">
-              <p>
-                convives (par défaut) : <strong>{data.guests!}</strong>
-              </p>
-              <p>
-                alergies : <strong>{data.alergy || 'aucune'}</strong>
-              </p>
-            </div>
-            <EditableCta />
-          </div>
-        )}
-      </motion.section>
-    </div>
+          )}
+        </motion.section>
+      </div>
+    )
   )
 }
 export default ProfilComponent

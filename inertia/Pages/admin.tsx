@@ -1,7 +1,7 @@
 import { useState, lazy, Suspense } from 'react'
 const AdminCard = lazy(() => import('./components/admin/admin_card'))
 const HourEditing = lazy(() => import('./components/admin/hour_editing'))
-const Layout = lazy(() => import('./components/layout'))
+const Layout = lazy(() => import('./components/layout/layout'))
 const CardEdition = lazy(() => import('./components/admin/card_edition'))
 const AdminEditImages = lazy(() => import('./components/admin/admin_edit_images'))
 import { AnimatePresence, motion } from 'framer-motion'
@@ -14,11 +14,12 @@ import type { UsersInformationType } from '../types/user_type.store'
 interface AdminProps {
   cardData: CardDataType
   hoursData: HourDataType[]
-  imagesData: Image[]
+  images: Image[]
   usersInformation: Array<UsersInformationType>
 }
-const Admin = ({ hoursData, cardData, imagesData, usersInformation }: AdminProps) => {
+const Admin = ({ hoursData, cardData, images, usersInformation }: AdminProps) => {
   const [displayEditImage, setDisplayEditImage] = useState(false)
+  
   const [imageEdition, setImageEdition] = useState<{
     id: number
     title: string

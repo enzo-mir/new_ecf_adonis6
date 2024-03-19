@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { Link } from '@inertiajs/react'
+import { Link, usePage } from '@inertiajs/react'
 import Reserv from '../reservations/reservation.js'
-import { hourStore } from '../../../data/store/api_data.store.js'
 import { AnimatePresence } from 'framer-motion'
 import styles from '../../../css/footer.module.css'
+import { PropsType } from './layout.js'
 
 const Footer = () => {
-  const hoursStore = hourStore((state) => state.hours)
   const [res, setRes] = useState(false)
+  const { props } = usePage() as unknown as PropsType
 
   return (
     <footer className={styles.footer}>
@@ -19,7 +19,7 @@ const Footer = () => {
           </tr>
         </thead>
         <tbody>
-          {hoursStore?.map((elem, id) => {
+          {props.hours.map((elem, id) => {
             return (
               <tr key={id}>
                 <td>{elem.day}</td>
