@@ -25,19 +25,21 @@ async function getReservation(ctx: HttpContext) {
 }
 
 async function sendUserData(ctx: HttpContext) {
-  if ((await ctx.auth.check()) && (await getCurrentReservation(ctx))) {
-    const currentReservation = await getCurrentReservation(ctx)
-    const userObject = ctx.auth.authenticate()
-    const response = {
-      id: (await userObject)!.id,
-      email: (await userObject)!.email,
-      guests: (await userObject)!.guests,
-      alergy: (await userObject)!.alergy,
-      name: (await userObject)!.name,
-      role: (await userObject)!.role,
-      currentReservation,
+  if (ctx.auth) {
+    if ((await ctx.auth.check()) && (await getCurrentReservation(ctx))) {
+      const currentReservation = await getCurrentReservation(ctx)
+      const userObject = ctx.auth.authenticate()
+      const response = {
+        id: (await userObject)!.id,
+        email: (await userObject)!.email,
+        guests: (await userObject)!.guests,
+        alergy: (await userObject)!.alergy,
+        name: (await userObject)!.name,
+        role: (await userObject)!.role,
+        currentReservation,
+      }
+      return response
     }
-    return response
   }
 }
 

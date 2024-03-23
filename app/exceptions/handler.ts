@@ -1,25 +1,10 @@
-import app from '@adonisjs/core/services/app'
 import { HttpContext, ExceptionHandler } from '@adonisjs/core/http'
 import type { StatusPageRange, StatusPageRenderer } from '@adonisjs/core/types/http'
+import { errors } from '@adonisjs/core'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
-  /**
-   * In debug mode, the exception handler will display verbose errors
-   * with pretty printed stack traces.
-   */
-  protected debug = !app.inProduction
-
-  /**
-   * Status pages are used to display a custom HTML pages for certain error
-   * codes. You might want to enable them in production only, but feel
-   * free to enable them in development as well.
-   */
-
-  protected renderStatusPages = app.inProduction
-
   protected statusPages: Record<StatusPageRange, StatusPageRenderer> = {
-    '404': (error, { inertia }) => inertia.render('errors/not_found', { error }),
-    '500..599': (error, { inertia }) => inertia.render('errors/server_error', { error }),
+    '404': (error, { inertia }) => inertia.render('undefined_page', { error }),
   }
 
   /**
@@ -27,6 +12,11 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    * response to the client
    */
   async handle(error: unknown, ctx: HttpContext) {
+    if (error instanceof errors.E_ROUTE_NOT_FOUND) {
+      const undefinedPage = await this.statusPages['404'](error, ctx)
+
+      return ctx.response.status(error.status).send(undefinedPage)
+    }
     return super.handle(error, ctx)
   }
 

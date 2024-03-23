@@ -37,7 +37,8 @@ export default class AuthentificationsController {
       const hashedPassword = await Hash.make(registerData.password!)
 
       const insertionQuery = await Database.rawQuery(
-        `INSERT INTO users(name, email, password, guests, alergy) VALUES ("${registerData.name}","${registerData.email}","${hashedPassword}",${registerData.guests},"${registerData.alergy}")`
+        `INSERT INTO users(name, email, password, guests, alergy) VALUES
+         ("${registerData.name}","${registerData.email}","${hashedPassword}",${registerData.guests},"${registerData.alergy}")`
       )
       if (insertionQuery[0].affectedRows > 0) {
         const user = await User.verifyCredentials(registerData.email, registerData.password)

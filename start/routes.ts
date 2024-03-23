@@ -65,6 +65,3 @@ router
   })
   .prefix('/image')
 router.get('/forgot_password/:email', [ForgotPasswordsController, 'index'])
-router.any('/*', async (ctx: HttpContext) => {
-  return ctx.inertia.render('undefined_page')
-})
