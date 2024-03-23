@@ -4,10 +4,11 @@ import type { UsersInformationType } from '../../../types/user_type.store'
 import styles from '../../../css/admin_user.module.css'
 import { userDataStore } from '../../../data/store/connect.store.js'
 import FormComponent from './form_user_update.js'
+import { PropsType } from '../layout/layout'
 
 const AdminUser = ({ usersInfo }: { usersInfo: Array<UsersInformationType> }) => {
-  const [currentId, setCurrentId] = useState<number>(null)
-  const [deleteId, setDeleteId] = useState<number>(null)
+  const [currentId, setCurrentId] = useState<number | null>(null)
+  const [deleteId, setDeleteId] = useState<number | null>(null)
   const [rolefilter, setRoleFilter] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
 
@@ -16,7 +17,7 @@ const AdminUser = ({ usersInfo }: { usersInfo: Array<UsersInformationType> }) =>
     data: deleteAccData,
     processing,
     setData: setDeleteAccData,
-  } = useForm<{ id: number }>({
+  } = useForm<{ id: number | null }>({
     id: null,
   })
   const {
@@ -32,8 +33,7 @@ const AdminUser = ({ usersInfo }: { usersInfo: Array<UsersInformationType> }) =>
     role: 1,
     password: '',
   })
-  const userData = userDataStore((state) => state.userData)
-  console.log(userData)
+  const userData = (usePage() as unknown as PropsType).props.user!
 
   useEffect(() => {
     setTimeout(() => {

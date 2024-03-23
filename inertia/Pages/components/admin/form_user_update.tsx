@@ -10,7 +10,7 @@ function FormComponent({
   setCurrentId,
   setErrorMessage,
 }: UsersInformationType & {
-  setCurrentId(val: number): void
+  setCurrentId(val: number | null): void
   setErrorMessage(val: string): void
 }) {
   const { post, processing, data, setData, reset } = useForm<

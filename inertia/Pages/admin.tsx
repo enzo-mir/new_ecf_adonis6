@@ -5,21 +5,17 @@ const Layout = lazy(() => import('./components/layout/layout'))
 const CardEdition = lazy(() => import('./components/admin/card_edition'))
 const AdminEditImages = lazy(() => import('./components/admin/admin_edit_images'))
 import { AnimatePresence, motion } from 'framer-motion'
-import type { CardDataType, HourDataType, Image } from '../types/data_api_types'
 import { Head } from '@inertiajs/react'
 import AdminImages from './components/admin/admin_images'
 import styles from '../css/admin.module.css'
 import AdminUser from './components/admin/admin_user'
 import type { UsersInformationType } from '../types/user_type.store'
 interface AdminProps {
-  cardData: CardDataType
-  hoursData: HourDataType[]
-  images: Image[]
   usersInformation: Array<UsersInformationType>
 }
-const Admin = ({ hoursData, cardData, images, usersInformation }: AdminProps) => {
+const Admin = ({ usersInformation }: AdminProps) => {
   const [displayEditImage, setDisplayEditImage] = useState(false)
-  
+
   const [imageEdition, setImageEdition] = useState<{
     id: number
     title: string

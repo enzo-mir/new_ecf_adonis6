@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
-import { cardStore } from '../../../data/store/api_data.store'
-import React from 'react'
 import styles from '../../../css/admin.module.css'
+import { usePage } from '@inertiajs/react'
+import { PropsType } from '../layout/layout'
 
 const AdminCard = ({
   display,
@@ -12,7 +12,7 @@ const AdminCard = ({
   setDisplay(val: boolean): void
   setData(val: object): void
 }) => {
-  const { dishs, starters, desserts, menus } = cardStore((state) => state.cardStore)
+  const { dishs, starters, desserts, menus } = (usePage() as unknown as PropsType).props.cardData!
 
   useEffect(() => {
     display ? (document.body.style.overflow = 'hidden') : document.body.removeAttribute('style')

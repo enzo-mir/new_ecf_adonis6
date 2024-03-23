@@ -1,11 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { hourStore } from '../../../data/store/api_data.store'
 import styles from '../../../css/admin.module.css'
 import React from 'react'
+import { usePage } from '@inertiajs/react'
+import { PropsType } from '../layout/layout'
 
 export default function HourEditing() {
   const [errorHour, setErrorHour] = useState(false)
   const [hoursEdit, setHoursEdit] = useState(false)
+
+  const { hours: hoursData } = (usePage() as unknown as PropsType).props
 
   const [hours, setHour] = hourStore((state) => [state.hours, state.setHours])
 
@@ -109,7 +113,7 @@ export default function HourEditing() {
           </tr>
         </thead>
         <tbody>
-          {hours?.map((elem, id) => {
+          {(hours.length ? hours : hoursData)?.map((elem, id) => {
             return (
               <tr key={id}>
                 <>
