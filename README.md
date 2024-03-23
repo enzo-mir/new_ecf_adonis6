@@ -1,130 +1,29 @@
-# Setup inertia app with Adonis v6 with React
+## Configurer l'application en local
 
-## Dependency
+# Commandes :
 
-[@adonisjs/inertia](https://www.npmjs.com/package/@adonisjs/inertia)
+`git clone https://github.com/enzo-mir/new_ecf_adonis6.git <nome_du_dossier>`
+`cd <nome_du_dossier>`
+`pnpm install`
 
-## Installation
+## Si pnpm n'est pas installer [installation](https://pnpm.io/installation)
 
-```shell
-# NPM
-npm i @adonisjs/inertia
+# Changement du nom
+Changer le nom du fichier `.env.local` par `.env`
 
-# Yarn
-yarn add @adonisjs/inertia
+# Création de la base de données
+`node db.js`
 
-# Pnpm
-pnpm add @adonisjs/inertia
-```
+# Migration des données
+`node ace migration:run`
 
-## Configuration
+# Lancement du serveur*
+`pnpm run dev`
 
-```shell
-# ace command from adonis
-node ace configure @adonisjs/inertia
-```
 
-And follow the instruction.
-(notice : accept to install the inertia and react packages recommanded)
+### Pour l'envois d'e-mail, changer les variables d'environement
 
-## Vite configuration
-
-### `vite.config.js`
-
-```shell
-import { defineConfig } from 'vite'
-import adonisjs from '@adonisjs/vite/client'
-import react from '@vitejs/plugin-react'
-export default defineConfig({
-  plugins: [
-    adonisjs({
-      /**
-       * Entrypoints of your application. Each entrypoint will
-       * result in a separate bundle.
-       */
-      entrypoints: ['resources/js/app.js'],
-
-      /**
-       * Paths to watch and reload the browser on file change
-       */
-      reload: ['resources/views/**/*.edge'],
-    }),
-    react(),
-  ],
-})
-```
-
-## edge configuration
-
-`/resources/view/home.edge`
-
-```shell
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> AdonisJS - A fully featured web framework for Node.js </title>
-  @viteReactRefresh()
-  @vite(['resources/js/app.tsx'])
-  @inertiaHead
-</head>
-<body>
-  #Inertia setup
-  @inertia()
-</body>
-</html>
-```
-
-The line `@vite(['resources/js/app.tsx'])` will be this entrypoint file.
-
-## Create inertia app
-
-`resources/js/app.tsx`
-
-```shell
-import { createInertiaApp } from '@inertiajs/react'
-import React from 'react'
-import { createRoot } from 'react-dom/client'
-
-createInertiaApp({
-  resolve: (name) => {
-    #Pages registration './Pages/${name}.tsx' that can be what you want
-    const pages = import.meta.glob('./Pages/**/*.tsx', { eager: true })
-    return pages[`./Pages/${name}.tsx`]
-  },
-  setup({ el, App, props }) {
-    createRoot(el).render(<App {...props} />)
-  },
-})
-```
-
-## Routing file
-
-`/start/routes.ts`
-
-```shell
-import { HttpContext } from '@adonisjs/core/http'
-import router from '@adonisjs/core/services/router'
-
-router.get('/', ({ inertia }: HttpContext) => {
-  const title = 'Hello world with Inertia'
-  return inertia.render('home', { title })
-})
-```
-
-## home page
-
-`/resources/js/Pages/home.tsx`
-
-```shell
-import React from 'react'
-interface HomeProps {title: string}
-const home: React.FunctionComponent<HomeProps> = ({ title }) => {
-  return <div>hello ! {title}</div>
-}
-
-export default home
-```
-
-For more information on adonis/inertia app gon on [aidellev/inertiajs-adonisjs](https://github.com/eidellev/inertiajs-adonisjs)
+- SMTP_USERNAME
+- SMTP_EMAIL
+- SMTP_PASSWORD
+- SECRET_ENCRYPT
