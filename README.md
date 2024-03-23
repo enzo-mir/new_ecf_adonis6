@@ -2,9 +2,9 @@
 
 # Commandes :
 
-`git clone https://github.com/enzo-mir/new_ecf_adonis6.git <nome_du_dossier>`
-`cd <nome_du_dossier>`
-`pnpm install`
+- `git clone https://github.com/enzo-mir/new_ecf_adonis6.git <nome_du_dossier>`
+- `cd <nome_du_dossier>`
+- `pnpm install`
 
 ## Si pnpm n'est pas installer [installation](https://pnpm.io/installation)
 
