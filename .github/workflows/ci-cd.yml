@@ -69,4 +69,4 @@ jobs:
             EOL
                     
             node ace migration:run --force
-            pm2 start bin/server.js
+            pm2 start bin/server.js --name=ecf
