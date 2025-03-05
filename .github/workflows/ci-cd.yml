@@ -48,7 +48,7 @@ jobs:
           script: |
             cd ~/htdocs/ecf.enzomrg.com
 
-            git pull origin main
+            git pull origin master
             cd app
 
             echo "Removing old build and assets"
