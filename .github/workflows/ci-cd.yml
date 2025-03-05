@@ -49,7 +49,6 @@ jobs:
             cd ~/htdocs/ecf.enzomrg.com
 
             git pull origin master
-            cd app
 
             echo "Removing old build and assets"
 
@@ -59,8 +58,9 @@ jobs:
             echo "Installing dependencies and building the app"
 
             pnpm install
-            pnpm build && cd build
-
+            pnpm build 
+            
+            cd build
             pnpm i -P
                     
             cat > .env << 'EOL'
