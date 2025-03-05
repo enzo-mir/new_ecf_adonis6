@@ -59,14 +59,12 @@ jobs:
             echo "Installing dependencies and building the app"
 
             pnpm install
-            pnpm build
+            pnpm build && cd build
 
-            cd build
             pnpm i -P
                     
             cat > .env << 'EOL'
             ${{ secrets.ENV_CONTENT }}
             EOL
                     
-            node ace migration:run --force
             pm2 start bin/server.js --name=ecf
