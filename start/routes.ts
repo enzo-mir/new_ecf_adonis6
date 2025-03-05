@@ -12,7 +12,6 @@ const AuthentificationsController = () => import('#controllers/authentifications
 const ImagesController = () => import('#controllers/images_controller')
 const ProfilesController = () => import('#controllers/profiles_controller')
 const ReservationsController = () => import('#controllers/reservations_controller')
-import { HttpContext } from '@adonisjs/core/http'
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 const ForgotPasswordsController = () => import('#controllers/forgot_passwords_controller')
