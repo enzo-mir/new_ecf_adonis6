@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'ecf',
-      script: './app/buil/bin/server.js',
+      script: './build/bin/server.js',
       instances: 'max',
       exec_mode: 'cluster',
       autorestart: true,
