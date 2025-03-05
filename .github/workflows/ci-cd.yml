@@ -59,12 +59,13 @@ jobs:
 
             pnpm install
             pnpm build 
-            
+
             cd build
             pnpm i -P
                     
             cat > .env << 'EOL'
             ${{ secrets.ENV_CONTENT }}
             EOL
-                    
-            pm2 start bin/server.js --name=ecf
+
+            cd ../../
+            pm2 start ecosystem.config.cjs
