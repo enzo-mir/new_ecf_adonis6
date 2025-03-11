@@ -3,9 +3,7 @@ module.exports = {
     {
       name: 'ecf',
       script: './bin/server.js',
-      instances: 'max',
-      exec_mode: 'cluster',
-      autorestart: true,
+      watch: true,
     },
   ],
 }
