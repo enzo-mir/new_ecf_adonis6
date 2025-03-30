@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'ecf',
       script: './bin/server.js',
-      watch: true,
+      watch: false,
     },
   ],
 }
